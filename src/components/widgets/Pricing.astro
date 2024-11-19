@@ -1,0 +1,101 @@
+---
+import { CheckIcon } from "lucide-react";
+
+const prices = [
+  {
+    title: "Moodee Star",
+    price: 99,
+    items: [
+      {
+        description: "Ecoute des réseaux sociaux, médias, avis clients",
+      },
+      {
+        description: "IA illimitée de Moodee (ChatBot, Tableaux, Graph)",
+      },
+      {
+        description: "Paramétrez jusqu’à 3 focus en simultané",
+      },
+    ],
+  },
+  {
+    title: "Moodee Pro",
+    price: 299,
+    items: [
+      {
+        description: "Ecoute des réseaux sociaux, médias, avis clients",
+      },
+      {
+        description: "IA illimitée de Moodee (ChatBot, Tableaux, Graph)",
+      },
+      {
+        description: "Paramétrez jusqu’à 12 focus en simultané",
+      },
+    ],
+  },
+  {
+    title: "Moodee Premium",
+    price: 0,
+    items: [
+      {
+        description: "Ecoute des réseaux sociaux, médias, avis clients",
+      },
+      {
+        description: "IA illimitée de Moodee (ChatBot, Tableaux, Graph)",
+      },
+      {
+        description: "Nombre de focus simultané sur mesures",
+      },
+    ],
+  },
+];
+---
+
+<div id="pricing" class="max-w-7xl mx-auto">
+  <h2
+    class="leading-tighter text-heading mb-8 text-center font-heading text-3xl font-bold tracking-tighter md:mx-auto md:mb-12"
+  >
+    Tableau des offres
+  </h2>
+  <div class="flex items-stretch justify-center">
+    <div class="grid grid-cols-3 gap-4">
+      {
+        prices.map(({ title, price, items }) => (
+          <div class="col-span-3 mx-auto flex w-full md:col-span-1">
+            <div class="bg-blue flex w-full max-w-md flex-col justify-between rounded-2xl border border-gray-200 p-8 text-center text-white shadow backdrop-blur">
+              <h3 class="mb-2 text-center text-2xl font-bold leading-6 tracking-wider">
+                {title}
+              </h3>
+              {price > 0 ? (
+                <div class="my-8">
+                  <div class="mb-1 flex items-center justify-center text-center">
+                    <span class="text-6xl font-extrabold">{price}€</span>
+                  </div>
+                  <span class="text-base lowercase leading-6 text-gray-600 dark:text-slate-400">
+                    par mois
+                  </span>
+                </div>
+              ) : (
+                <div class="my-8">
+                  <div class="mb-1 flex items-center justify-center text-center">
+                    <span class="text-6xl font-extrabold">Sur mesure</span>
+                  </div>
+                </div>
+              )}
+              <ul class="my-8 space-y-2">
+                {items.map(({ description }) => (
+                  <li class="flex items-start gap-2 text-start">
+                    <CheckIcon className="size-5 font-bold text-green" />
+                    <span class="leading-5">{description}</span>
+                  </li>
+                ))}
+              </ul>
+              <a class="mx-auto" target="_blank" href="#features">
+                Essayer 7 jours
+              </a>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</div>
