@@ -2,7 +2,13 @@
 import { Check, Crown, Star, Wrench } from "lucide-react";
 import { Button } from "../ui/button";
 
-const prices = [
+const plans: {
+  title: "Moodee Start" | "Moodee Pro" | "Moodee Premium";
+  subtitle: string;
+  price: number;
+  highlight: boolean;
+  items: { description: string }[];
+}[] = [
   {
     title: "Moodee Start",
     subtitle: "Le plan idéal pour débuter",
@@ -39,7 +45,7 @@ const prices = [
   },
   {
     title: "Moodee Premium",
-    subtitle: "Un plan sur mesure",
+    subtitle: "Le plan sur mesure",
     highlight: false,
     price: 0,
     items: [
@@ -55,6 +61,35 @@ const prices = [
     ],
   },
 ];
+
+const planStyles: Record<
+  "Moodee Start" | "Moodee Pro" | "Moodee Premium",
+  {
+    textColor: string;
+    bgColor: string;
+    hoverBgColor: string;
+    lightBgColor: string;
+  }
+> = {
+  "Moodee Start": {
+    textColor: "text-orange",
+    bgColor: "bg-orange",
+    hoverBgColor: "hover:shadow-orange",
+    lightBgColor: "bg-orange-light",
+  },
+  "Moodee Pro": {
+    textColor: "text-green",
+    bgColor: "bg-green",
+    hoverBgColor: "hover:shadow-green",
+    lightBgColor: "bg-green-light",
+  },
+  "Moodee Premium": {
+    textColor: "text-purple",
+    bgColor: "bg-purple",
+    hoverBgColor: "hover:shadow-purple",
+    lightBgColor: "bg-purple-light",
+  },
+};
 ---
 
 <section id="pricing" class="mx-auto w-11/12 max-w-7xl pt-24">
@@ -64,89 +99,75 @@ const prices = [
     Nos plans tarifaires...
     <span class="absolute -bottom-4 right-8 h-1.5 w-1/2 bg-blue"></span>
   </h2>
+
   <div class="flex items-stretch justify-center">
     <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
       {
-        prices.map(({ title, subtitle, highlight, price, items }) => (
-          <div class="group relative flex flex-col justify-between rounded-3xl border border-gray-200 bg-white p-8 text-dark shadow-md transition-all hover:cursor-pointer hover:bg-blue hover:text-white hover:shadow-xl">
-            {highlight && (
-              <div class="absolute right-[-5px] top-[-5px] z-[1] h-[100px] w-[100px] overflow-hidden text-right 2xl:right-[-8px] 2xl:top-[-10px] rtl:left-[-8px] rtl:right-auto rtl:2xl:left-[-10px]">
-                <span class="absolute right-[-21px] top-[19px] block w-full rotate-45 bg-green text-center text-[10px] font-bold leading-5 text-white shadow-[0_3px_10px_-5px_rgba(0,0,0,0.3)] before:absolute before:left-0 before:top-full before:z-[-1] before:border-[3px] before:border-b-transparent before:border-l-green-800 before:border-r-transparent before:border-t-green-800 before:content-[''] after:absolute after:right-0 after:top-full after:z-[-1] after:border-[3px] after:border-b-transparent after:border-l-transparent after:border-r-green-800 after:border-t-green-800 after:content-[''] rtl:left-[-21px] rtl:right-auto rtl:-rotate-45">
-                  Best seller
-                </span>
-              </div>
-            )}
-            <div class="flex items-center gap-2">
-              <div class="flex items-center justify-center rounded-xl bg-blue-light p-4 group-hover:bg-white">
-                {title === "Moodee Start" && (
-                  <Star className="h-6 w-6 text-orange" />
-                )}
-                {title === "Moodee Pro" && (
-                  <Crown className="h-6 w-6 text-green" />
-                )}
-                {title === "Moodee Premium" && (
-                  <Wrench className="h-6 w-6 text-purple" />
-                )}
-              </div>
-              <div>
-                <h4 class="group- text-sm font-light text-gray-400 group-hover:text-white">
-                  {subtitle}
-                </h4>
-                <h3 class="text-xl font-bold">{title}</h3>
-              </div>
-            </div>
-
-            <div class="my-8 flex items-center">
-              {price > 0 ? (
-                <>
-                  <span class="text-5xl font-extrabold">{price}</span>
-                  <span class="text-xl">€</span>
-                  <span class="text-base font-medium">/mois</span>
-                </>
-              ) : (
-                <span class="text-xl font-extrabold">Sur mesure</span>
+        plans.map(({ title, subtitle, highlight, price, items }) => {
+          const styles = planStyles[title]; // Récupérer les styles par titre
+          return (
+            <div
+              class={`group relative flex flex-col justify-between rounded-3xl border border-gray-200 bg-white p-8 text-dark shadow-md hover:cursor-pointer ${styles.hoverBgColor} hover:shadow-lg`}
+            >
+              {highlight && (
+                <div class="absolute right-[-5px] top-[-5px] z-[1] h-[100px] w-[100px] overflow-hidden text-right">
+                  <span class="absolute right-[-21px] top-[19px] block w-full rotate-45 bg-blue text-center text-[10px] font-bold leading-5 text-white shadow-[0_3px_10px_-5px_rgba(0,0,0,0.3)]">
+                    Best seller
+                  </span>
+                </div>
               )}
+              <div class="flex items-center gap-2">
+                <div
+                  class={`flex items-center justify-center rounded-xl ${styles.lightBgColor} p-3 ${styles.textColor}`}
+                >
+                  {title === "Moodee Start" && (
+                    <Star className={`size-8 ${styles.textColor}`} />
+                  )}
+                  {title === "Moodee Pro" && (
+                    <Crown className={`size-8 ${styles.textColor}`} />
+                  )}
+                  {title === "Moodee Premium" && (
+                    <Wrench className={`size-8 ${styles.textColor}`} />
+                  )}
+                </div>
+                <div>
+                  <h4 class="text-sm font-light text-gray-400">{subtitle}</h4>
+                  <h3 class="text-xl font-bold">{title}</h3>
+                </div>
+              </div>
+
+              <div class="my-8 flex items-center">
+                {price > 0 ? (
+                  <>
+                    <span class="text-5xl font-extrabold">{price}</span>
+                    <span class="text-xl">€</span>
+                    <span class="text-base font-medium">/mois</span>
+                  </>
+                ) : (
+                  <span class="text-xl font-extrabold">Sur mesure</span>
+                )}
+              </div>
+
+              <p class="font-bold">Ce qui est inclus :</p>
+              <ul class="space-y-4 text-left">
+                {items.map(({ description }) => (
+                  <li class="flex items-center gap-2 text-gray-500">
+                    <div class={`rounded-full p-1 ${styles.bgColor}`}>
+                      <Check className="size-4 text-white" />
+                    </div>
+                    <span>{description}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <Button
+                className={`mt-6 ${styles.bgColor} hover:${styles.bgColor}`}
+              >
+                Commencer
+              </Button>
             </div>
-
-            <p class="font-bold">Ce qui est inclus :</p>
-            <ul class="space-y-4 text-left">
-              {items.map(({ description }) => (
-                <li class="flex items-center gap-2 text-gray-500 group-hover:text-white">
-                  <div class="rounded-full bg-blue p-1 group-hover:bg-white">
-                    {title === "Moodee Start" && (
-                      <Check className="size-4 text-white group-hover:text-orange" />
-                    )}
-                    {title === "Moodee Pro" && (
-                      <Check className="size-4 text-white group-hover:text-green" />
-                    )}
-                    {title === "Moodee Premium" && (
-                      <Check className="size-4 text-white group-hover:text-purple" />
-                    )}
-                  </div>
-                  <span>{description}</span>
-                </li>
-              ))}
-            </ul>
-
-            <Check className="size-4 text-white group-hover:text-blue" />
-
-            {title === "Moodee Start" && (
-              <Button className="bg-orange group-hover:bg-white group-hover:text-orange mt-6">
-                Commencer
-              </Button>
-            )}
-            {title === "Moodee Pro" && (
-              <Button className="bg-green group-hover:bg-white group-hover:text-green mt-6">
-                Commencer
-              </Button>
-            )}
-            {title === "Moodee Premium" && (
-              <Button className="bg-purple group-hover:bg-white group-hover:text-purple mt-6">
-                Commencer
-              </Button>
-            )}
-          </div>
-        ))
+          );
+        })
       }
     </div>
   </div>
