@@ -1,0 +1,56 @@
+---
+import { FaqAccordion } from "../ui/accordion";
+
+const faqItems = [
+  {
+    question: "Qu'est-ce que Moodee et comment fonctionne-t-il ?",
+    answer:
+      "Moodee est une solution d’analyse d’e-réputation qui utilise l’intelligence artificielle pour recueillir, analyser et restituer des données issues d’avis clients (Amazon, Google Reviews, Trustpilot, etc.), des réseaux sociaux (TikTok, Instagram, X, Facebook, LinkedIn) et des actualités (Google News). Grâce à nos technologies avancées, vous obtenez des rapports détaillés en temps réel pour mieux comprendre le sentiment client, les mentions de votre produit ou de la concurrence.",
+  },
+  {
+    question:
+      "Quels types de données Moodee analyse-t-il et d'où proviennent-elles ?",
+    answer:
+      "Moodee récupère et analyse un large éventail de données, incluant les avis clients (Amazon, Google Reviews, Trustpilot, etc.), les posts et commentaires sur les réseaux sociaux (TikTok, Instagram, Facebook, LinkedIn, X), ainsi que les actualités via Google News. Ces données sont enrichies par notre IA pour fournir des insights précis et exploitables.",
+  },
+  {
+    question: "Comment puis-je utiliser les données fournies par Moodee ?",
+    answer:
+      "Avec Moodee, vous pouvez créer des dashboards, tableaux et graphiques sur mesure en temps réel pour suivre les performances de vos campagnes. Notre IA vous permet aussi de poser des questions spécifiques sur le sentiment client, les mentions de produits ou encore la concurrence, et d’obtenir des réponses précises grâce à notre chatbot basé sur l’IA, qui fonctionne comme un ChatGPT dédié à vos données.",
+  },
+  {
+    question: "Moodee permet-il de suivre la concurrence ?",
+    answer:
+      "Oui, Moodee inclut un outil de veille concurrentielle. Vous pouvez paramétrer des mots-clés spécifiques pour surveiller les actions de vos concurrents, comparer vos produits avec les leurs et même générer des argumentaires commerciaux qui mettent en avant les points forts de vos produits et les points faibles des concurrents.",
+  },
+  {
+    question:
+      "Comment Moodee utilise-t-il l'intelligence artificielle pour améliorer les analyses ?",
+    answer:
+      "Moodee combine la puissance de l’IA avec des technologies relationnelles traditionnelles, permettant ainsi de fournir des données ultra précises. Cette synergie permet de générer des insights personnalisés et des rapports détaillés, tout en répondant à des requêtes spécifiques avec une grande précision.",
+  },
+  {
+    question: "Moodee est-il adapté aux entreprises de toutes tailles ?",
+    answer:
+      "Absolument ! Que vous soyez une petite entreprise ou une grande marque, Moodee s’adapte à vos besoins. Grâce à ses outils de personnalisation et ses capacités d’analyse en temps réel, vous obtenez des insights exploitables, peu importe la taille ou la complexité de vos opérations.",
+  },
+];
+---
+
+<section id="faq" class="mx-auto w-2/3 max-w-7xl py-16">
+  <h2 class="relative mb-12 w-fit text-center text-5xl font-bold md:mx-auto">
+    Foire aux questions...
+    <span class="absolute -bottom-4 right-8 h-1.5 w-1/2 bg-blue"></span>
+  </h2>
+  <div class="space-y-4">
+    {
+      faqItems.map((faqItem, index) => (
+        <FaqAccordion
+          question={faqItem.question}
+          answer={faqItem.answer}
+          client:load
+        />
+      ))
+    }
+  </div>
+</section>

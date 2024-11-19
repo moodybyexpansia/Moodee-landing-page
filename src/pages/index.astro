@@ -1,15 +1,17 @@
 ---
+import FAQs from "@/components/widgets/FAQs.astro";
+import Hero from "@/components/widgets/Hero.astro";
 import Pricing from "@/components/widgets/Pricing.astro";
+import Steps from "@/components/widgets/Steps.astro";
 import Testimonials from "@/components/widgets/Testimonials.astro";
 import "@/styles/globals.css";
 import Layout from "../layouts/Layout.astro";
 ---
 
 <Layout title="Welcome to Astro.">
+  <Hero />
+  <Steps />
   <Pricing />
   <Testimonials />
-  <Pricing />
-  <Testimonials />
-  <Pricing />
-  <Testimonials />
+  <FAQs />
 </Layout>

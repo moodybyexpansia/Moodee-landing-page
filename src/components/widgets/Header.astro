@@ -1,10 +1,9 @@
 ---
-import { initializeHeaderScripts } from "@/lib/header-scripts.js";
+import type { HTMLAttributes } from "astro/types";
+import { ChevronDown } from "lucide-react";
 import { Button } from "../ui/button";
 
-setTimeout(() => {
-  initializeHeaderScripts();
-}, 0);
+// Appelle la fonction d'initialisation après que le DOM est chargé
 
 interface Link {
   text?: string;
@@ -17,6 +16,7 @@ interface MenuLink extends Link {
   links?: Array<MenuLink>;
 }
 
+
 export interface Props {
   links?: Array<MenuLink>;
 }
@@ -24,109 +24,129 @@ export interface Props {
 const { links = [] } = Astro.props;
 ---
 
-<header
-  class="sticky top-0 z-40 mx-auto w-full flex-none border-b border-gray-50/0 transition-[opacity] ease-in-out"
-  {...{ "data-aw-sticky-header": true }}
-  id="header"
->
-  <div class="absolute inset-0"></div>
-  <div
-    class="relative mx-auto w-full max-w-7xl px-3 py-3 md:grid md:grid-cols-3 md:items-center md:px-6"
-  >
-    <div class="flex justify-between">
-      <!-- Logo Section -->
-      <a class="flex items-center" href="/">
-        <span
-          class="ml-2 flex items-center gap-2 self-center whitespace-nowrap text-2xl font-bold text-gray-900 dark:text-white md:text-xl rtl:ml-0 rtl:mr-2"
-        >
-          <img src="src/assets/images/moodee-v1.png" class="size-8" />
-          Moodee
-        </span>
-      </a>
+<script is:inline>
+  document.addEventListener("DOMContentLoaded", () => {
+    const header = document.querySelector("#header");
+    const toggleMenuButton = document.querySelector("[data-toggle-menu]");
+    const nav = document.querySelector("#header nav");
+    const lastChildDiv = document.querySelector("#header > div > div:last-child");
+    const textElements = document.querySelectorAll("[data-text-dark]"); // Tous les éléments ciblés
 
+    // Gérer le défilement et les styles du header
+    const handleScroll = () => {
+      if (window.scrollY > 60) {
+        header?.classList.add("scroll");
+        textElements.forEach((el) => {
+          el.classList.remove("text-white");
+          el.classList.add("text-dark");
+        });
+      } else {
+        header?.classList.remove("scroll");
+        textElements.forEach((el) => {
+          el.classList.remove("text-dark");
+          el.classList.add("text-white");
+        });
+      }
+    };
+
+    // Toggle menu lors d'un clic sur le bouton
+    const toggleMenu = () => {
+      const isExpanded = toggleMenuButton?.classList.toggle("expanded");
+      document.body.classList.toggle("overflow-hidden", isExpanded);
+      header?.classList.toggle("h-screen", isExpanded);
+      header?.classList.toggle("expanded", isExpanded);
+      header?.classList.toggle("bg-page", isExpanded);
+      nav?.classList.toggle("hidden", !isExpanded);
+      lastChildDiv?.classList.toggle("hidden", !isExpanded);
+    };
+
+    // Fermer le menu lors d'un clic sur la navigation
+    const closeMenu = () => {
+      toggleMenuButton?.classList.remove("expanded");
+      document.body.classList.remove("overflow-hidden");
+      header?.classList.remove("h-screen", "expanded", "bg-page");
+      nav?.classList.add("hidden");
+      lastChildDiv?.classList.add("hidden");
+    };
+
+    // Écouteurs d'événements
+    toggleMenuButton?.addEventListener("click", toggleMenu);
+    nav?.addEventListener("click", closeMenu);
+    window.addEventListener("scroll", handleScroll);
+
+    // Initialisation
+    handleScroll();
+  });
+</script>
+
+<header
+  id="header"
+  class="sticky flex-shrink-0 top-0 z-40 mx-auto w-full flex-none border-b border-gray-50/0 transition-[opacity] ease-in-out"
+  data-sticky-header
+>
+  <div
+    class="relative mx-auto w-11/12 max-w-7xl h-[4.5rem] flex items-center"
+  >
+    <!-- Logo -->
+    <div class="flex w-full md:w-fit items-center justify-between">
+      <a class="flex items-center" href="/">
+        <div
+          class="flex items-center gap-2 text-2xl font-bold text-white"
+          data-text-dark
+        >
+          <img src="/moodee-v1.png" class="size-8" alt="Moodee logo" />
+          <h3>Moodee</h3>
+        </div>
+      </a>
       <!-- Mobile Menu Button -->
       <div class="flex items-center md:hidden">
         <button
           type="button"
-          class="group flex h-12 w-12 cursor-pointer flex-col items-center justify-center rounded"
-          data-aw-toggle-menu
+          class="group flex h-8 w-8 cursor-pointer flex-col items-center justify-center rounded"
+          data-toggle-menu
         >
-          <span class="sr-only">Toggle Menu</span>
-          <slot>
-            <span
-              aria-hidden="true"
-              class="ease my-1 h-0.5 w-6 transform rounded-full bg-black opacity-80 transition duration-200 group-[.expanded]:translate-y-2.5 group-[.expanded]:rotate-45 dark:bg-white"
-            ></span>
-            <span
-              aria-hidden="true"
-              class="ease my-1 h-0.5 w-6 transform rounded-full bg-black opacity-80 transition duration-200 group-[.expanded]:opacity-0 dark:bg-white"
-            ></span>
-            <span
-              aria-hidden="true"
-              class="ease my-1 h-0.5 w-6 transform rounded-full bg-black opacity-80 transition duration-200 group-[.expanded]:-translate-y-2.5 group-[.expanded]:-rotate-45 dark:bg-white"
-            ></span>
-          </slot>
+          <span
+            class="ease my-1 h-0.5 w-6 transform rounded-full bg-black opacity-80 transition duration-200 group-[.expanded]:translate-y-2.5 group-[.expanded]:rotate-45 dark:bg-white"
+          ></span>
+          <span
+            class="ease my-1 h-0.5 w-6 transform rounded-full bg-black opacity-80 transition duration-200 group-[.expanded]:opacity-0 dark:bg-white"
+          ></span>
+          <span
+            class="ease my-1 h-0.5 w-6 transform rounded-full bg-black opacity-80 transition duration-200 group-[.expanded]:-translate-y-2.5 group-[.expanded]:-rotate-45 dark:bg-white"
+          ></span>
         </button>
       </div>
     </div>
 
-    <!-- Navigation Section -->
+    <!-- Navigation -->
     <nav
-      class="text-default hidden w-full items-center overflow-y-auto overflow-x-hidden md:mx-5 md:flex md:w-auto md:justify-self-center md:overflow-x-auto md:overflow-y-visible"
+      class="hidden items-start md:flex ml-12 md:gap-12"
       aria-label="Main navigation"
     >
       <ul
-        class="flex w-full flex-col text-xl font-medium tracking-[0.01rem] md:w-auto md:flex-row md:justify-center md:self-center md:text-[0.9375rem]"
+        class="flex w-full flex-col font-medium md:gap-12 md:flex-row md:justify-center"
       >
         {
           links.map(({ text, href, links }) => (
-            <li class={links?.length ? "dropdown" : ""}>
-              {links?.length ? (
-                <>
-                  <button
-                    type="button"
-                    class="hover:text-link flex items-center whitespace-nowrap px-4 py-3 dark:hover:text-white"
-                  >
-                    {text}
-                  </button>
-                  <ul class="dropdown-menu rounded pl-4 font-medium drop-shadow-xl md:absolute md:hidden md:min-w-[200px] md:bg-white/90 md:pl-0 md:backdrop-blur-md dark:md:bg-dark">
-                    {links.map(({ text: text2, href: href2 }) => (
-                      <li>
-                        <a
-                          class="hover:text-link whitespace-no-wrap block px-5 py-2 first:rounded-t last:rounded-b dark:hover:bg-gray-700 dark:hover:text-white md:hover:bg-gray-100"
-                          href={href2}
-                        >
-                          {text2}
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                </>
-              ) : (
-                <a
-                  class="hover:text-link flex items-center whitespace-nowrap px-4 py-3 dark:hover:text-white"
-                  href={href}
-                >
-                  {text}
-                </a>
-              )}
+            <li>
+              <a
+                href={href}
+                class='text-white hover:text-dark block whitespace-no-wrap',
+                data-text-dark
+              >
+                {text}
+              </a>
             </li>
           ))
         }
       </ul>
     </nav>
 
-    <!-- Actions Section -->
-    <div
-      class="fixed bottom-0 left-0 hidden w-full items-center justify-end p-3 md:static md:mb-0 md:flex md:w-auto md:self-center md:justify-self-end md:p-0 rtl:left-auto rtl:right-0"
-    >
-      <div class="flex w-full items-center justify-between md:w-auto">
-        <span class="ml-4 rtl:ml-0 rtl:mr-4">
-          <Button
-            className="px-5.5 ml-2 w-auto py-2.5 text-sm font-semibold shadow-none md:px-6"
-          />
-        </span>
-      </div>
+    <!-- Actions -->
+    <div class="hidden ml-auto items-center justify-end md:flex md:gap-2">
+     <Button variant='outline' className="bg-transparent" >Obtenir une démo</Button>
+     <Button>Commencer</Button>
+
     </div>
   </div>
 </header>

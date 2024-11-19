@@ -1,56 +1,79 @@
 ---
-import InteractiveCarousel from '@/components/widgets/InteractiveCarousel';
+import { InfiniteMovingCards } from "@/components/ui/infinite-moving-cards";
+export type Testimonial = {
+  title: string;
+  avis: string;
+  name: string;
+  job: string;
+  note: number;
+  image?: {
+    src: string;
+    alt: string;
+  };
+};
 
 const testimonials = [
   {
-    avis:
-      'Grâce à Moodee, analyser le sentiment client et surveiller la concurrence est devenu un jeu d’enfant ! Les statistiques en temps réel nous donnent un gain de temps incroyable, libérant notre équipe pour des actions stratégiques. C’est révolutionnaire dans le suivi de réputation.',
-    name: 'Anthony BODY',
-    job: 'Founder, Investisseur',
+    title: "Moodee a révolutionné le social listening",
+    avis: "Grâce à Moodee, analyser le sentiment client et surveiller la concurrence est devenu un jeu d’enfant ! Les statistiques en temps réel nous donnent un gain de temps incroyable, libérant notre équipe pour des actions stratégiques. C’est révolutionnaire dans le suivi de réputation.",
+    name: "Anthony BODY",
+    job: "Founder, Investisseur",
+    note: 4,
     image: {
-      src: 'src/assets/images/anthony-body.jpeg',
-      alt: 'Anthony BODY Image',
+      src: "/anthony-body.jpeg",
+      alt: "Anthony BODY Image",
     },
   },
   {
-    avis:
-      'Moodee a transformé notre veille concurrentielle, avec des insights en temps réel et des rapports sur le sentiment client, on gagne un temps précieux. L’application nous permet de réagir vite aux tendances du marché. Un outil essentiel pour rester compétitif !',
-    name: 'Bénédicte Ripault',
-    job: 'ALB Développement',
+    title: "Moodee a révolutionné le social listening",
+    avis: "Moodee a transformé notre veille concurrentielle, avec des insights en temps réel et des rapports sur le sentiment client, on gagne un temps précieux. L’application nous permet de réagir vite aux tendances du marché. Un outil essentiel pour rester compétitif !",
+    name: "Bénédicte Ripault",
+    job: "ALB Développement",
+    note: 5,
     image: {
-      src: 'src/assets/images/benedicte-ripault.jpeg',
-      alt: 'Bénédicte Ripault Image',
+      src: "/benedicte-ripault.jpeg",
+      alt: "Bénédicte Ripault Image",
     },
   },
   {
-    avis:
-      'Moodee est un véritable accélérateur pour votre stratégie digitale : analyse de sentiment en temps réel, veille concurrentielle précise, et statistiques immédiates. Rejoignez-nous et découvrez comment Moodee peut révolutionner votre vision des données.',
-    name: 'Vincent RYCKBOSCH',
-    job: 'CEO, Moodee',
+    title: "Moodee a révolutionné le social listening",
+    avis: "Moodee est un véritable accélérateur pour votre stratégie digitale : analyse de sentiment en temps réel, veille concurrentielle précise, et statistiques immédiates. Rejoignez-nous et découvrez comment Moodee peut révolutionner votre vision des données.",
+    name: "Vincent RYCKBOSCH",
+    job: "CEO, Moodee",
+    note: 5,
     image: {
-      src: 'src/assets/images/vincent-ryckbosch.jpeg',
-      alt: 'Vincent RYCKBOSCH Image',
+      src: "/vincent-ryckbosch.jpeg",
+      alt: "Vincent RYCKBOSCH Image",
     },
   },
   {
-    avis:
-      'Moodee change tout : une interface fluide, des données claires, et des statistiques en un instant ! Plus besoin de fouiller partout ; on voit immédiatement le ressenti des clients et ce que font les concurrents. Un atout précieux pour ajuster notre stratégie.',
-    name: 'Etienne Pascal',
-    job: 'Bêta-testeur',
+    title: "Moodee a révolutionné le social listening",
+    avis: "Moodee change tout : une interface fluide, des données claires, et des statistiques en un instant ! Plus besoin de fouiller partout ; on voit immédiatement le ressenti des clients et ce que font les concurrents. Un atout précieux pour ajuster notre stratégie.",
+    name: "Etienne Pascal",
+    job: "Bêta-testeur",
+    note: 4.5,
     image: {
-      src: 'https://media.licdn.com/dms/image/v2/D4E03AQEwDu7fBY85lg/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1727249374189?e=1737590400&v=beta&t=dnNRdb86aAZLOG7-l6F_W8of1E9SxU2QNz4dixm3wOY',
-      alt: 'Etienne Pascal Image',
+      src: "https://media.licdn.com/dms/image/v2/D4E03AQEwDu7fBY85lg/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1727249374189?e=1737590400&v=beta&t=dnNRdb86aAZLOG7-l6F_W8of1E9SxU2QNz4dixm3wOY",
+      alt: "Etienne Pascal Image",
     },
   },
 ];
 ---
 
-<div id="testimonials" class="max-w-7xl mx-auto">
-  <h2
-    class="leading-tighter text-heading mb-8 text-center font-heading text-3xl font-bold tracking-tighter md:mx-auto md:mb-12"
-  >
-    Ce que disent nos clients
+<section id="testimonials" class="mt-24 bg-blue-light py-16">
+  <h2 class="relative mb-12 w-fit text-center text-5xl font-bold md:mx-auto">
+    Ce que disent nos clients...
+    <span class="absolute -bottom-4 right-8 h-1.5 w-1/2 bg-blue"></span>
   </h2>
 
-  <InteractiveCarousel testimonials={testimonials} client:load/>
-</div>
+  <div
+    class="relative mx-auto flex w-11/12 max-w-7xl flex-col items-center justify-center overflow-hidden rounded-md antialiased"
+  >
+    <InfiniteMovingCards
+      items={testimonials}
+      direction="right"
+      speed="fast"
+      client:load
+    />
+  </div>
+</section>

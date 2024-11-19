@@ -1,0 +1,53 @@
+---
+import { YouTube } from "astro-embed";
+import { Button } from "../ui/button";
+---
+
+<section class="relative md:-mt-12">
+  <div
+    class="pointer-events-none absolute inset-0 md:-top-10"
+    aria-hidden="true"
+  >
+    <img alt="shadow" src="/moodee-shadow-landing.png" />
+  </div>
+  <div class="relative mx-auto w-11/12 max-w-7xl">
+    <div class="py-12 md:py-20 lg:flex lg:items-center lg:gap-8 lg:pt-36">
+      <div class="mx-auto basis-1/2 pb-10 text-center md:pb-16 lg:text-left">
+        <h1 class="mb-4 text-5xl font-bold md:text-6xl">
+          L'IA qui capte l'opinion de vos clients
+          <span class="highlight text-primary"> en temps réel</span>
+        </h1>
+        <div class="mx-auto max-w-3xl">
+          <p class="mb-6 text-xl">
+            Moodee simplifie l’extraordinaire : surveillez et analysez votre
+            présence en ligne en un instant.
+          </p>
+          <div
+            class="m-auto flex max-w-xs flex-col flex-nowrap gap-4 sm:max-w-md sm:flex-row sm:justify-center lg:m-0 lg:max-w-7xl lg:justify-start"
+          >
+            <div class="flex w-full sm:w-auto">
+              <Button className="w-full sm:mb-0">Commencer</Button>
+            </div>
+            <div class="flex w-full sm:w-auto">
+              <Button className="w-full sm:mb-0">Demander une démo</Button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="basis-1/2">
+        <div class="relative m-auto max-w-5xl">
+          <YouTube
+            id="gxBkghlglTg"
+            title="Astro just Launched.... Could it be the ultimate web framework?"
+          />
+          <style is:inline>
+            lite-youtube {
+              margin: 0 auto;
+              max-width: 100%;
+            }
+          </style>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
