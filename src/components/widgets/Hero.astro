@@ -1,6 +1,59 @@
 ---
 import { YouTube } from "astro-embed";
 import { Button } from "../ui/button";
+
+const images = [
+  {
+    src: "facebook.png",
+    alt: "Facebook",
+    size: "h-12",
+  },
+  {
+    src: "tiktok.png",
+    alt: "Tiktok",
+    size: "h-14",
+  },
+  {
+    src: "/instagram.png",
+    alt: "Instagram",
+    size: "h-16 ",
+  },
+  {
+    src: "x-logo.png",
+    alt: "X",
+    size: "h-8",
+  },
+  {
+    src: "linkedin.png",
+    alt: "Linkedin",
+    size: "h-10 ",
+  },
+  {
+    src: "google-news.png",
+    alt: "Google News",
+    size: "h-12",
+  },
+  {
+    src: "google-reviews.png",
+    alt: "Google Reviews",
+    size: "h-12",
+  },
+  {
+    src: "amazon-reviews.png",
+    alt: "Amazon Reviews",
+    size: "h-12 ",
+  },
+  {
+    src: "avis-verifies.png",
+    alt: "Avis vérifiés",
+    size: "h-12 ",
+  },
+  {
+    src: "trustpilot.png",
+    alt: "Trustpilot",
+    size: "h-12 ",
+  },
+];
 ---
 
 <section class="relative md:-mt-12">
@@ -48,6 +101,29 @@ import { Button } from "../ui/button";
           </style>
         </div>
       </div>
+    </div>
+
+    <h2 class="mx-auto w-fit text-center text-4xl font-extrabold">
+      <span class="text-blue">10+ réseaux </span>
+      à votre disposition...
+    </h2>
+    <div
+      class="mx-auto mt-4 grid grid-cols-5 flex-wrap items-center justify-center gap-x-6"
+    >
+      {
+        images.map(
+          (image) =>
+            image.src && (
+              <div class="col-span-1 my-2 flex justify-center grayscale hover:grayscale-0">
+                <img
+                  src={image.src}
+                  alt={image.alt || ""}
+                  class={`${image.size}`}
+                />
+              </div>
+            ),
+        )
+      }
     </div>
   </div>
 </section>
