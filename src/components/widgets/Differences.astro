@@ -55,7 +55,7 @@ const differences = [
       {
         differences.map((diff, index) => (
           <React.Fragment>
-            <h3 class="relative col-span-3 flex h-12 items-center justify-start px-6 text-xs font-medium md:col-span-6 md:text-base">
+            <h3 class="relative col-span-3 flex h-14 items-center justify-start text-xs font-medium md:col-span-6 md:px-6 md:text-base">
               {diff.feature}
               <span
                 class="absolute -right-12 top-0 h-0.5 bg-gray-200"
@@ -64,7 +64,7 @@ const differences = [
               />
             </h3>
 
-            <div class="relative col-span-1 flex h-12 items-center justify-center">
+            <div class="relative col-span-1 flex h-14 items-center justify-center">
               <div class="flex h-6 w-6 items-center justify-center rounded-full border-2 border-blue text-blue">
                 <XIcon className="size-4 text-blue" strokeWidth={3} />
               </div>
@@ -75,7 +75,7 @@ const differences = [
             </div>
 
             <div
-              class={`relative col-span-1 flex h-12 w-full items-center justify-center bg-blue text-white ${differences.length === index + 1 && "rounded-b-2xl"}`}
+              class={`relative col-span-1 flex h-14 w-full items-center justify-center bg-blue text-white ${differences.length === index + 1 && "rounded-b-2xl"}`}
             >
               <div class="flex h-6 w-6 items-center justify-center rounded-full bg-white">
                 <CheckIcon className="size-4 text-blue" strokeWidth={3} />

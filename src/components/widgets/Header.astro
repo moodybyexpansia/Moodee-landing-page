@@ -5,23 +5,14 @@ import { Button } from "../ui/button";
 
 // Appelle la fonction d'initialisation après que le DOM est chargé
 
-interface Link {
-  text?: string;
-  href?: string;
-  ariaLabel?: string;
-  icon?: string;
-}
-
-interface MenuLink extends Link {
-  links?: Array<MenuLink>;
-}
-
-
-export interface Props {
-  links?: Array<MenuLink>;
-}
-
-const { links = [] } = Astro.props;
+const links = [
+    {
+      text: "Home",
+      href: "/",
+    },
+    { text: "Pricing", href: "/#pricing" },
+    { text: "Avis clients", href: "/#testimonials" },
+  ]
 ---
 
 <script is:inline>
@@ -31,6 +22,7 @@ const { links = [] } = Astro.props;
     const nav = document.querySelector("#header nav");
     const lastChildDiv = document.querySelector("#header > div > div:last-child");
     const textElements = document.querySelectorAll("[data-text-dark]"); // Tous les éléments ciblés
+    const borderElements = document.querySelectorAll("[data-border-dark]"); // Tous les éléments ciblés
 
     // Gérer le défilement et les styles du header
     const handleScroll = () => {
@@ -40,11 +32,19 @@ const { links = [] } = Astro.props;
           el.classList.remove("text-white");
           el.classList.add("text-dark");
         });
+        borderElements.forEach((el) => {
+          el.classList.remove("border-white");
+          el.classList.add("border-dark");
+        });
       } else {
         header?.classList.remove("scroll");
         textElements.forEach((el) => {
           el.classList.remove("text-dark");
           el.classList.add("text-white");
+        });
+        borderElements.forEach((el) => {
+          el.classList.remove("border-dark");
+          el.classList.add("border-white");
         });
       }
     };
@@ -127,7 +127,7 @@ const { links = [] } = Astro.props;
         class="flex w-full flex-col font-medium md:gap-12 md:flex-row md:justify-center"
       >
         {
-          links.map(({ text, href, links }) => (
+          links.map(({ text, href }) => (
             <li>
               <a
                 href={href}
@@ -145,10 +145,10 @@ const { links = [] } = Astro.props;
     <!-- Actions -->
     <div class="hidden ml-auto items-center justify-end md:flex md:gap-4">
       <a href="#pricing">
-        <button class="rounded-xl px-5 py-2 ring-0 border-2 border-green bg-green text-white transition-colors">Obtenir une démo</button> 
+        <button class="rounded-xl px-5 py-2 ring-0 border-2 border-blue bg-blue hover:bg-blue/90 text-white transition-colors">Obtenir une démo</button> 
       </a>
       <a href="https://moodee.app/">
-        <button class="rounded-xl flex items-center gap-2 px-5 py-2 ring-0 border-2 border-white text-white transition-colors" data-text-dark>
+        <button class="rounded-xl flex items-center gap-2 px-5 py-2 ring-0 border-2 border-blue text-blue transition-colors" ="">
           Moodee.app
           <ArrowUpRight strokeWidth={3} className="size-6" /> </button> 
       </a>  
