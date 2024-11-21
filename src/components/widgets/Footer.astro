@@ -1,31 +1,5 @@
 ---
 import { Button } from "../ui/button";
-
-interface Link {
-  text?: string;
-  href?: string;
-  ariaLabel?: string;
-  icon?: string;
-}
-
-interface Links {
-  title?: string;
-  links: Array<Link>;
-}
-
-export interface Props {
-  links: Array<Links>;
-  socialLinks: Array<Link>;
-  footNote?: string;
-  theme?: string;
-}
-
-const {
-  socialLinks = [],
-  links = [],
-  footNote = "",
-  theme = "light",
-} = Astro.props;
 ---
 
 <footer class="relative mt-24 pb-8">

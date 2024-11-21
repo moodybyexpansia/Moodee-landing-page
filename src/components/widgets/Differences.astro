@@ -1,0 +1,91 @@
+---
+import { CheckIcon, XIcon } from "lucide-react";
+import React from "react";
+const differences = [
+  {
+    feature:
+      "Surveillance en temps réel des réseaux sociaux et des plateformes de discussion",
+  },
+  {
+    feature: "Analyse automatisée des sentiments et des tendances de marché",
+  },
+  {
+    feature:
+      "Alertes instantanées pour les crises d’e-réputation ou les buzz médiatiques",
+  },
+  {
+    feature:
+      "Rapports personnalisés pour une stratégie digitale basée sur des données concrètes",
+  },
+  {
+    feature:
+      "Suivi précis des mots-clés liés à la veille concurrentielle et au positionnement stratégique",
+  },
+  {
+    feature:
+      "Insights exploitables pour optimiser votre stratégie marketing en ligne",
+  },
+];
+---
+
+<section
+  id="differences"
+  class="mx-auto my-24 w-11/12 max-w-7xl -rotate-3 rounded-[3rem] bg-white bg-opacity-90 p-12 shadow-[0_0px_25px_5px_rgba(0,0,0,0.1)]"
+>
+  <div class="rotate-3">
+    <h2
+      class="relative mb-12 w-fit text-center text-5xl font-bold md:mx-auto md:mb-24"
+    >
+      La différence Moodee...
+      <span class="absolute -bottom-4 right-8 h-1.5 w-1/2 bg-blue"></span>
+    </h2>
+
+    <div class="grid grid-cols-5 md:grid-cols-8">
+      <p
+        class="col-span-1 col-start-4 flex items-center justify-center py-2 text-center text-sm font-semibold leading-5 md:col-start-7 md:py-4 md:text-lg"
+      >
+        Sans<br />Moodee
+      </p>
+      <p
+        class="col-span-1 col-start-5 mx-auto flex w-full items-center justify-center rounded-t-2xl bg-blue py-2 text-center text-sm font-semibold leading-5 text-white md:col-start-8 md:py-4 md:text-lg"
+      >
+        Avec <br /> moodee
+      </p>
+
+      {
+        differences.map((diff, index) => (
+          <React.Fragment>
+            <h3 class="relative col-span-3 flex h-12 items-center justify-start px-6 text-xs font-medium md:col-span-6 md:text-base">
+              {diff.feature}
+              <span
+                class="absolute -right-12 top-0 h-0.5 bg-gray-200"
+                style="width: calc(100% + 48px);"
+                aria-hidden="true"
+              />
+            </h3>
+
+            <div class="relative col-span-1 flex h-12 items-center justify-center">
+              <div class="flex h-6 w-6 items-center justify-center rounded-full border-2 border-blue text-blue">
+                <XIcon className="size-4 text-blue" strokeWidth={3} />
+              </div>
+              <span
+                class="absolute -right-12 top-0 h-0.5 w-full bg-gray-200"
+                aria-hidden="true"
+              />
+            </div>
+
+            <div
+              class={`relative col-span-1 flex h-12 w-full items-center justify-center bg-blue text-white ${differences.length === index + 1 && "rounded-b-2xl"}`}
+            >
+              <div class="flex h-6 w-6 items-center justify-center rounded-full bg-white">
+                <CheckIcon className="size-4 text-blue" strokeWidth={3} />
+              </div>
+            </div>
+
+            <div class="hidden border-t-2 md:col-span-1" />
+          </React.Fragment>
+        ))
+      }
+    </div>
+  </div>
+</section>

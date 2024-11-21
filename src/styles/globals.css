@@ -29,7 +29,7 @@ body {
   right: 0;
   bottom: 70px !important;
   padding: 0 5px;
-  color: darkblue;
+  color: #ecf6ff;
 }
 
 #header.scroll > div:last-child {
@@ -45,23 +45,4 @@ body {
 
 [data-aw-toggle-menu].expanded g > path:last-child {
   @apply translate-x-[14px] translate-y-[-8px] rotate-45;
-}
-
-.custom-gradient {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    to bottom,
-    white 0%,
-    #87c3ff 10%,
-    /* Couleur intermédiaire */ #409cff 20%,
-    #409cff 80%,
-    #87c3ff 90%,
-    /* Couleur intermédiaire */ white 100%
-  );
-  filter: blur(40px);
-  border-radius: 12rem;
 }

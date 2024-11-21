@@ -1,6 +1,6 @@
 ---
 import type { HTMLAttributes } from "astro/types";
-import { ChevronDown } from "lucide-react";
+import { ArrowUpRight, ChevronDown, CircleArrowOutUpRight, SquareArrowOutUpRight } from "lucide-react";
 import { Button } from "../ui/button";
 
 // Appelle la fonction d'initialisation après que le DOM est chargé
@@ -143,10 +143,15 @@ const { links = [] } = Astro.props;
     </nav>
 
     <!-- Actions -->
-    <div class="hidden ml-auto items-center justify-end md:flex md:gap-2">
-     <Button variant='outline' className="bg-transparent" >Obtenir une démo</Button>
-     <Button>Commencer</Button>
-
+    <div class="hidden ml-auto items-center justify-end md:flex md:gap-4">
+      <a href="#pricing">
+        <button class="rounded-xl px-5 py-2 ring-0 border-2 border-green bg-green text-white transition-colors">Obtenir une démo</button> 
+      </a>
+      <a href="https://moodee.app/">
+        <button class="rounded-xl flex items-center gap-2 px-5 py-2 ring-0 border-2 border-white text-white transition-colors" data-text-dark>
+          Moodee.app
+          <ArrowUpRight strokeWidth={3} className="size-6" /> </button> 
+      </a>  
     </div>
   </div>
 </header>

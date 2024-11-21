@@ -1,55 +1,73 @@
 ---
-// Features.astro
 const features = [
   {
     step: 1,
-    title: "Récoltez des données complètes en un clic",
+    title: "Analysez les mentions produits et suivez votre e-réputation",
     description:
-      "MoodAI collecte automatiquement des données provenant de multiples sources, grâce à l'intelligence artificielle.",
+      "MoodAI collecte automatiquement toutes les mentions de votre produit sur une dizaine de réseaux sociaux. Grâce à ses outils avancés de social listening, identifiez les discussions autour de votre marque et surveillez les stratégies digitales de vos concurrents pour affiner votre veille concurrentielle.",
+    bgColor: "bg-blue",
+    textColor: "text-blue-light",
   },
   {
     step: 2,
-    title: "Obtenez des KPI précis instantanément",
+    title:
+      "Obtenez des KPIs en temps réel pour optimiser votre stratégie marketing",
     description:
-      "Posez vos questions à Moodee et recevez des KPI détaillés et adaptés à vos besoins spécifiques en temps réel.",
+      "MoodAI analyse les données collectées pour vous fournir des indicateurs clés. Ces insights en temps réel vous aident à ajuster vos initiatives en ligne et à maximiser l'impact de votre stratégie marketing, tout en surveillant votre e-réputation.",
+    bgColor: "bg-orange",
+    textColor: "text-orange-light",
   },
   {
     step: 3,
-    title: "Restez informé des tendances émergentes",
+    title:
+      "Surveillez les tendances pour renforcer votre veille concurrentielle",
     description:
-      "Moodee surveille en continu les mentions de votre marque et les tendances sur les réseaux sociaux. Recevez des alertes en temps réel dès qu'un buzz se forme.",
+      "MoodAI surveille en continu les tendances émergentes et les actualités stratégiques sur les réseaux sociaux. Ces données alimentent votre stratégie digitale en vous permettant d’anticiper les mouvements de vos concurrents et de rester à la pointe de l'innovation.",
+    bgColor: "bg-green",
+    textColor: "text-green-light",
+  },
+  {
+    step: 4,
+    title: "Posez vos questions à MoodAI pour une stratégie digitale efficace",
+    description:
+      "MoodAI vous accompagne dans l'élaboration de votre stratégie digitale grâce à son chatbot intelligent. Posez vos questions pour obtenir des rapports personnalisés sur votre e-réputation, des analyses des tendances marketing, ou des recommandations stratégiques en temps réel. MoodAI est votre allié pour une prise de décision rapide et performante.",
+    bgColor: "bg-purple",
+    textColor: "text-purple-light",
   },
 ];
 ---
 
-<section class="relative my-24">
-  <div
-    class="custom-gradient absolute left-0 top-0 h-full w-full rounded-[20rem]"
-  >
-  </div>
-
-  <div class="relative mx-auto my-36 w-11/12 max-w-7xl text-white">
-    <h2 class="mb-16 text-center text-5xl font-bold leading-[52px]">
-      Les fonctionnalités de
-      <span class="relative">
-        Moodee
-        <span class="absolute -bottom-0 right-0 h-1.5 w-full bg-white"></span>
-      </span>
+<section class="relative py-24">
+  <div class="relative mx-auto w-11/12 max-w-7xl">
+    <h2
+      class="relative mb-12 w-fit max-w-4xl text-center text-5xl font-bold md:mx-auto md:mb-36"
+    >
+      Une solution pour votre stratégie digitale et votre veille
+      concurrentielle...
+      <span class="absolute -bottom-4 right-8 h-1.5 w-1/2 bg-blue"></span>
     </h2>
 
-    <div class="grid grid-cols-1 gap-8 py-12 md:grid-cols-3">
+    <div class="grid grid-cols-1 gap-8 md:grid-cols-2 md:gap-24">
       {
         features.map((feature) => (
           <div class="relative flex flex-col items-start">
-            <span class="absolute -top-20 right-10 text-[150px] font-black text-blue-200 opacity-10 md:-top-32 md:right-10 md:text-[200px]">
+            <span
+              class={`absolute -top-20 right-10 text-[150px] font-black ${feature.textColor} md:-top-32 md:right-10 md:text-[200px]`}
+            >
               {feature.step}
             </span>
-            <div class="relative flex h-12 w-12 items-center justify-center rounded-2xl bg-white">
-              <div class="absolute h-5 w-5 rounded-full bg-blue" />
+            <div
+              class={`relative flex h-12 w-12 items-center justify-center rounded-2xl ${feature.bgColor}`}
+            >
+              <div class="absolute h-5 w-5 rounded-full bg-white" />
             </div>
 
-            <h3 class="mt-2 text-xl font-semibold">{feature.title}</h3>
-            <p class="mt-2">{feature.description}</p>
+            <h3 class="relative mt-2 text-2xl font-semibold">
+              {feature.title}
+            </h3>
+            <p class="relative mt-2 text-justify text-lg">
+              {feature.description}
+            </p>
           </div>
         ))
       }

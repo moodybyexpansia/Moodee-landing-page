@@ -7,100 +7,71 @@ interface Props {
 }
 
 const { title } = Astro.props;
-
-const headerData = {
-  links: [
-    {
-      text: "Home",
-      href: "/",
-    },
-    { text: "Pricing", href: "/#pricing" },
-    { text: "Avis clients", href: "/#testimonials" },
-  ],
-};
-
-const footerData = {
-  links: [
-    {
-      title: "Product",
-      links: [
-        { text: "Features", href: "#" },
-        { text: "Security", href: "#" },
-        { text: "Team", href: "#" },
-        { text: "Enterprise", href: "#" },
-        { text: "Customer stories", href: "#" },
-        { text: "Pricing", href: "#" },
-        { text: "Resources", href: "#" },
-      ],
-    },
-    {
-      title: "Platform",
-      links: [
-        { text: "Developer API", href: "#" },
-        { text: "Partners", href: "#" },
-        { text: "Atom", href: "#" },
-        { text: "Electron", href: "#" },
-        { text: "AstroWind Desktop", href: "#" },
-      ],
-    },
-    {
-      title: "Support",
-      links: [
-        { text: "Docs", href: "#" },
-        { text: "Community Forum", href: "#" },
-        { text: "Professional Services", href: "#" },
-        { text: "Skills", href: "#" },
-        { text: "Status", href: "#" },
-      ],
-    },
-    {
-      title: "Company",
-      links: [
-        { text: "About", href: "#" },
-        { text: "Blog", href: "#" },
-        { text: "Careers", href: "#" },
-        { text: "Press", href: "#" },
-        { text: "Inclusion", href: "#" },
-        { text: "Social Impact", href: "#" },
-        { text: "Shop", href: "#" },
-      ],
-    },
-  ],
-
-  socialLinks: [
-    { ariaLabel: "X", icon: "tabler:brand-x", href: "#" },
-    { ariaLabel: "Instagram", icon: "tabler:brand-instagram", href: "#" },
-    { ariaLabel: "Facebook", icon: "tabler:brand-facebook", href: "#" },
-    {
-      ariaLabel: "Github",
-      icon: "tabler:brand-github",
-      href: "https://github.com/onwidget/astrowind",
-    },
-  ],
-  footNote: `
-    <img class="w-5 h-5 md:w-6 md:h-6 md:-mt-0.5 bg-cover mr-1.5 rtl:mr-0 rtl:ml-1.5 float-left rtl:float-right rounded-sm" src="https://onwidget.com/favicon/favicon-32x32.png" alt="onWidget logo" loading="lazy"></img>
-    Made by <a class="text-blue-600 underline dark:text-muted" href="https://onwidget.com/"> onWidget</a> · All rights reserved.
-  `,
-};
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="fr">
   <head>
     <meta charset="UTF-8" />
-    <meta name="description" content="Astro description" />
+    <!-- Meta Title -->
+    <title>
+      {title}
+    </title>
+
+    <!-- Meta Description -->
+    <meta
+      name="description"
+      content="Moodee révolutionne la stratégie digitale avec une veille concurrentielle avancée et un suivi d’e-réputation précis. Analysez, anticipez, et agissez avec notre IA."
+    />
+
+    <!-- Meta Keywords -->
+    <meta
+      name="keywords"
+      content="veille concurrentielle, stratégie digitale, e-réputation, social listening, Moodee, analyse des tendances, surveillance des concurrents, image de marque"
+    />
+
+    <!-- Open Graph / Social Sharing -->
+    <meta
+      property="og:title"
+      content="Moodee : Veille Concurrentielle, Stratégie Digitale et E-réputation"
+    />
+    <meta
+      property="og:description"
+      content="Moodee, l'outil ultime de veille concurrentielle et d'e-réputation : anticipez, analysez et maîtrisez tout ce qui se dit sur votre marque et vos concurrents."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://moodee.app" />
+    <meta property="og:image" content="/assets/og-image.png" />
+
+    <!-- Twitter Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="Moodee : Veille Concurrentielle, Stratégie Digitale et E-réputation"
+    />
+    <meta
+      name="twitter:description"
+      content="Découvrez comment Moodee peut transformer votre stratégie digitale grâce à une veille concurrentielle avancée, un suivi précis de votre e-réputation et des insights tirés du social listening."
+    />
+    <meta name="twitter:image" content="/assets/og-image.png" />
+
+    <!-- Responsive -->
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="generator" content={Astro.generator} />
-    <title>{title}</title>
+
+    <!-- Robots -->
+    <meta name="robots" content="index, follow" />
   </head>
   <body class="flex min-h-screen flex-col">
     <!-- Header Section -->
-    <Header {...headerData} />
-
-    <slot />
+    <Header />
+    <main>
+      <slot />
+    </main>
 
     <!-- Footer Section -->
-    <Footer {...footerData} />
+    <Footer />
   </body>
 </html>
