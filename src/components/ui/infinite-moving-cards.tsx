@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 import { Star } from "lucide-react";
 import React, { useEffect, useState } from "react";
-import type { Testimonial } from "../widgets/InteractiveCarousel";
+import type { Testimonial } from "../widgets/Testimonials.astro";
 
 export const InfiniteMovingCards = ({
   items,
