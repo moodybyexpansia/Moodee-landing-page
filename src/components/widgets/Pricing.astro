@@ -60,19 +60,19 @@ const planStyles: Record<
   starter: {
     textColor: "text-orange",
     bgColor: "bg-orange",
-    hoverBgColor: "hover:shadow-[0_0px_25px_10px_rgba(253,243,217,1)]",
+    hoverBgColor: "hover:shadow-orange-light",
     lightBgColor: "bg-orange-light",
   },
   pro: {
     textColor: "text-green",
     bgColor: "bg-green",
-    hoverBgColor: "hover:shadow-[0_0px_25px_10px_rgba(221,249,225,1)]",
+    hoverBgColor: "hover:shadow-green-light",
     lightBgColor: "bg-green-light",
   },
   premium: {
     textColor: "text-purple",
     bgColor: "bg-purple",
-    hoverBgColor: "hover:shadow-[0_0px_25px_10px_rgba(236,223,249,1)]",
+    hoverBgColor: "hover:shadow-purple-light",
     lightBgColor: "bg-purple-light ",
   },
 };
@@ -94,7 +94,7 @@ const planStyles: Record<
             const styles = planStyles[shortTitle]; // Récupérer les styles par titre
             return (
               <div
-                class={`group relative flex flex-col justify-between rounded-3xl border border-gray-200 bg-white p-8 text-dark shadow-md hover:cursor-pointer ${styles.hoverBgColor} hover:shadow-lg`}
+                class={`hover:shadow-full group relative flex flex-col justify-between rounded-3xl border border-gray-200 bg-white p-8 shadow-md hover:cursor-pointer ${styles.hoverBgColor}`}
               >
                 {highlight && (
                   <div class="absolute right-[-5px] top-[-5px] z-[1] h-[100px] w-[100px] overflow-hidden text-right">

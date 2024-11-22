@@ -69,28 +69,28 @@ export const InfiniteMovingCards = ({
     <div
       ref={containerRef}
       className={cn(
-        "scroller relative z-20 max-w-7xl overflow-hidden [mask-image:linear-gradient(to_right,transparent,white_20%,white_80%,transparent)]",
+        "scroller relative z-20 overflow-hidden [mask-image:linear-gradient(to_right,transparent,white_20%,white_80%,transparent)]",
         className,
       )}
     >
       <ul
         ref={scrollerRef}
         className={cn(
-          "flex w-max min-w-full shrink-0 flex-nowrap gap-4 py-4",
+          "flex w-max min-w-full shrink-0 flex-nowrap gap-12 py-4",
           start && "animate-scroll",
           pauseOnHover && "hover:[animation-play-state:paused]",
         )}
       >
         {items.map((item, idx) => (
           <li
-            className="relative flex w-[350px] max-w-full flex-shrink-0 flex-col justify-between space-y-8 rounded-3xl bg-white px-8 py-6 text-blue shadow-[0_0px_1px_1px_rgba(0,0,0,0.1)] md:w-[450px]"
+            className="group relative flex w-80 max-w-full flex-shrink-0 flex-col justify-between space-y-4 rounded-3xl bg-white px-8 py-6 text-blue shadow-sm transition-colors hover:bg-blue hover:text-white sm:w-96 md:w-[500px]"
             key={item.name}
           >
-            <h3 className="text-xl font-extrabold">
+            <h3 className="text-xl font-bold">
               {item.title || "Titre non défini"}
             </h3>
 
-            <blockquote className="text-base font-light leading-5">
+            <blockquote className="text-sm font-light leading-5">
               {item.avis}
             </blockquote>
 
@@ -107,7 +107,9 @@ export const InfiniteMovingCards = ({
                 )}
                 <div className="flex flex-col">
                   <p className="text-base font-bold">{item.name}</p>
-                  <p className="text-sm text-gray-500">{item.job}</p>
+                  <p className="text-sm text-gray-500 group-hover:text-gray-200">
+                    {item.job}
+                  </p>
                 </div>
               </div>
               <div>

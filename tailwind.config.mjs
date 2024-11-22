@@ -32,6 +32,9 @@ export default {
           DEFAULT: "#F6C443",
         },
       },
+      boxShadow: {
+        full: "0 0px 20px 5px rgba(0, 0, 0, 0.1)",
+      },
       keyframes: {
         "accordion-down": {
           from: {

@@ -27,8 +27,7 @@ const ReactHoverImages: React.FC<ReactHoverImagesProps> = ({ steps }) => {
           <div
             key={step.id}
             className={cn(
-              currentImage === step.image &&
-                "bg-white shadow-[0_0px_25px_5px_rgba(0,0,0,0.1)]",
+              currentImage === step.image && "shadow-full bg-white",
               "group flex h-auto items-start gap-4 rounded-3xl p-6",
             )}
             onMouseEnter={() => setCurrentImage(step.image)}

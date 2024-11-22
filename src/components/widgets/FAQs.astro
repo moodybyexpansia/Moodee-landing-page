@@ -1,4 +1,5 @@
 ---
+import { Calendar } from "lucide-react";
 import { FaqAccordion } from "../ui/accordion";
 
 const faqItems = [
@@ -54,5 +55,21 @@ const faqItems = [
         />
       ))
     }
+  </div>
+
+  <div class="mx-auto mt-20 text-center">
+    <div class="mx-auto w-fit">
+      <a href="/">
+        <button
+          class="flex transform items-center gap-8 rounded-xl bg-blue px-12 py-4 font-bold uppercase tracking-widest text-white transition-colors duration-200 hover:scale-105 hover:bg-blue/90"
+        >
+          <p>Réservez votre démo</p>
+          <Calendar />
+        </button>
+      </a>
+      <p class="mt-2 text-center text-sm text-gray-400">
+        Sans engagement, c'est rapide et simple.
+      </p>
+    </div>
   </div>
 </section>

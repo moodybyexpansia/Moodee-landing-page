@@ -43,3 +43,18 @@ body {
 [data-aw-toggle-menu].expanded g > path:last-child {
   @apply translate-x-[14px] translate-y-[-8px] rotate-45;
 }
+
+.testimonials-custom-gradient {
+  position: absolute;
+  inset: 0;
+
+  background: linear-gradient(
+    to bottom,
+    white 0%,
+    #f8f8f8 20%,
+    #f4f4f4 40%,
+    #f4f4f4 60%,
+    #f8f8f8 80%,
+    white 100%
+  );
+}

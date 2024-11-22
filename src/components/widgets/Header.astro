@@ -1,9 +1,6 @@
 ---
-import type { HTMLAttributes } from "astro/types";
-import { ArrowUpRight, ChevronDown, CircleArrowOutUpRight, SquareArrowOutUpRight } from "lucide-react";
-import { Button } from "../ui/button";
+import { ArrowUpRight } from "lucide-react";
 
-// Appelle la fonction d'initialisation après que le DOM est chargé
 
 const links = [
     {
@@ -23,6 +20,9 @@ const links = [
     const lastChildDiv = document.querySelector("#header > div > div:last-child");
     const textElements = document.querySelectorAll("[data-text-dark]"); // Tous les éléments ciblés
     const borderElements = document.querySelectorAll("[data-border-dark]"); // Tous les éléments ciblés
+    const logoBlue = document.querySelector("[data-logo-blue]");
+    const logoWhite = document.querySelector("[data-logo-white]");
+    const moodeeTitle = document.querySelector("[data-moodee-title]");
 
     // Gérer le défilement et les styles du header
     const handleScroll = () => {
@@ -36,6 +36,10 @@ const links = [
           el.classList.remove("border-white");
           el.classList.add("border-dark");
         });
+        logoBlue?.classList.remove("hidden");
+        logoWhite?.classList.add("hidden");
+        moodeeTitle?.classList.add("text-blue");
+        moodeeTitle?.classList.remove("text-white");
       } else {
         header?.classList.remove("scroll");
         textElements.forEach((el) => {
@@ -46,6 +50,10 @@ const links = [
           el.classList.remove("border-dark");
           el.classList.add("border-white");
         });
+        logoBlue?.classList.add("hidden");
+        logoWhite?.classList.remove("hidden");
+        moodeeTitle?.classList.remove("text-blue");
+        moodeeTitle?.classList.add("text-white");
       }
     };
 
@@ -91,11 +99,13 @@ const links = [
     <div class="flex w-full md:w-fit items-center justify-between">
       <a class="flex items-center" href="/">
         <div
-          class="flex items-center gap-2 text-2xl font-bold text-white"
+          class="flex items-center gap-2 text-2xl font-bold"
           data-text-dark
         >
-          <img src="/moodee-v1.png" class="size-8" alt="Moodee logo" />
-          <h3>Moodee</h3>
+          <img src="/logo-white.png" class="size-8" alt="Moodee logo" data-logo-white />
+          <img src="/logo-blue.png" class="size-8" alt="Moodee logo" data-logo-blue />
+
+          <h3 data-moodee-title>Moodee</h3>
         </div>
       </a>
       <!-- Mobile Menu Button -->
@@ -147,7 +157,7 @@ const links = [
       <a href="#pricing">
         <button class="rounded-xl px-5 py-2 ring-0 border-2 border-blue bg-blue hover:bg-blue/90 text-white transition-colors">Obtenir une démo</button> 
       </a>
-      <a href="https://moodee.app/">
+      <a href="https://moodee.app/" target="_blank">
         <button class="rounded-xl flex items-center gap-2 px-5 py-2 ring-0 border-2 border-blue text-blue transition-colors" ="">
           Moodee.app
           <ArrowUpRight strokeWidth={3} className="size-6" /> </button> 
