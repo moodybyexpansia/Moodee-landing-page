@@ -1,85 +1,120 @@
 ---
 import { ArrowUpRight } from "lucide-react";
 
-
 const links = [
-    {
-      text: "Home",
-      href: "/",
-    },
-    { text: "Pricing", href: "/#pricing" },
-    { text: "Avis clients", href: "/#testimonials" },
-  ]
+  {
+    text: "Home",
+    href: "/",
+  },
+  { text: "Pricing", href: "/#pricing" },
+  { text: "Avis clients", href: "/#testimonials" },
+];
 ---
 
 <script is:inline>
   document.addEventListener("DOMContentLoaded", () => {
     const header = document.querySelector("#header");
-    const toggleMenuButton = document.querySelector("[data-toggle-menu]");
-    const nav = document.querySelector("#header nav");
-    const lastChildDiv = document.querySelector("#header > div > div:last-child");
-    const textElements = document.querySelectorAll("[data-text-dark]"); // Tous les éléments ciblés
-    const borderElements = document.querySelectorAll("[data-border-dark]"); // Tous les éléments ciblés
+    const openMenuButton = document.querySelector("[data-open-menu]");
+    const mainNav = document.getElementById("main-nav");
+    const mobileNav = document.getElementById("mobile-nav");
+    const textElements = document.querySelectorAll("[data-text-dark]");
+    const borderElements = document.querySelectorAll("[data-border-dark]");
     const logoBlue = document.querySelector("[data-logo-blue]");
     const logoWhite = document.querySelector("[data-logo-white]");
     const moodeeTitle = document.querySelector("[data-moodee-title]");
 
+    // Utilitaires pour ajouter et supprimer des classes
+    const addClasses = (element, classes) => element.classList.add(...classes);
+    const removeClasses = (element, classes) =>
+      element.classList.remove(...classes);
+
     // Gérer le défilement et les styles du header
     const handleScroll = () => {
-      if (window.scrollY > 60) {
-        header?.classList.add("scroll");
-        textElements.forEach((el) => {
-          el.classList.remove("text-white");
-          el.classList.add("text-dark");
-        });
-        borderElements.forEach((el) => {
-          el.classList.remove("border-white");
-          el.classList.add("border-dark");
-        });
-        logoBlue?.classList.remove("hidden");
-        logoWhite?.classList.add("hidden");
-        moodeeTitle?.classList.add("text-blue");
-        moodeeTitle?.classList.remove("text-white");
-      } else {
-        header?.classList.remove("scroll");
-        textElements.forEach((el) => {
-          el.classList.remove("text-dark");
-          el.classList.add("text-white");
-        });
-        borderElements.forEach((el) => {
-          el.classList.remove("border-dark");
-          el.classList.add("border-white");
-        });
-        logoBlue?.classList.add("hidden");
-        logoWhite?.classList.remove("hidden");
-        moodeeTitle?.classList.remove("text-blue");
-        moodeeTitle?.classList.add("text-white");
+      const scrolled = window.scrollY > 60;
+
+      // Header styles
+      const headerClasses = [
+        "bg-white/90",
+        "backdrop-blur-lg",
+        "shadow-[0_0.375rem_1.5rem_0_rgba(0,0,0,0.1)]",
+      ];
+      scrolled
+        ? addClasses(header, headerClasses)
+        : removeClasses(header, headerClasses);
+
+      // Texte et bordures
+      textElements.forEach((el) =>
+        scrolled
+          ? (addClasses(el, ["text-dark"]), removeClasses(el, ["text-white"]))
+          : (addClasses(el, ["text-white"]), removeClasses(el, ["text-dark"])),
+      );
+      borderElements.forEach((el) =>
+        scrolled
+          ? (addClasses(el, ["border-dark"]),
+            removeClasses(el, ["border-white"]))
+          : (addClasses(el, ["border-white"]),
+            removeClasses(el, ["border-dark"])),
+      );
+
+      // Logos
+      scrolled
+        ? addClasses(logoWhite, ["hidden"])
+        : removeClasses(logoWhite, ["hidden"]);
+      scrolled
+        ? removeClasses(logoBlue, ["hidden"])
+        : addClasses(logoBlue, ["hidden"]);
+
+      // Moodee Title
+      scrolled
+        ? (addClasses(moodeeTitle, ["text-blue"]),
+          removeClasses(moodeeTitle, ["text-white"]))
+        : (addClasses(moodeeTitle, ["text-white"]),
+          removeClasses(moodeeTitle, ["text-blue"]));
+    };
+
+    // Ouvrir le menu mobile
+    const openMenu = () => {
+      addClasses(document.body, ["overflow-hidden"]);
+      addClasses(header, ["h-screen", "bg-white/90"]);
+      addClasses(mainNav, ["hidden"]);
+      removeClasses(mainNav, ["flex"]);
+      removeClasses(mobileNav, ["hidden"]);
+      addClasses(mobileNav, [
+        "flex",
+        "flex-col",
+        "items-start",
+        "justify-start",
+      ]);
+
+      // Écouteur pour clic en dehors
+      document.addEventListener("click", handleOutsideClick);
+    };
+
+    // Fermer le menu mobile
+    const closeMenu = () => {
+      removeClasses(document.body, ["overflow-hidden"]);
+      removeClasses(header, ["h-screen", "bg-white/90"]);
+      removeClasses(mainNav, ["hidden"]);
+      addClasses(mainNav, ["flex"]);
+      addClasses(mobileNav, ["hidden"]);
+
+      // Retirer l'écouteur pour clic en dehors
+      document.removeEventListener("click", handleOutsideClick);
+    };
+
+    // Gestion des clics en dehors du menu
+    const handleOutsideClick = (event) => {
+      if (
+        !mobileNav.contains(event.target) &&
+        !openMenuButton.contains(event.target)
+      ) {
+        closeMenu();
       }
     };
 
-    // Toggle menu lors d'un clic sur le bouton
-    const toggleMenu = () => {
-      const isExpanded = toggleMenuButton?.classList.toggle("expanded");
-      document.body.classList.toggle("overflow-hidden", isExpanded);
-      header?.classList.toggle("h-screen", isExpanded);
-      header?.classList.toggle("expanded", isExpanded);
-      header?.classList.toggle("bg-page", isExpanded);
-      nav?.classList.toggle("hidden", !isExpanded);
-      lastChildDiv?.classList.toggle("hidden", !isExpanded);
-    };
-
-    // Fermer le menu lors d'un clic sur la navigation
-    const closeMenu = () => {
-      toggleMenuButton?.classList.remove("expanded");
-      document.body.classList.remove("overflow-hidden");
-      header?.classList.remove("h-screen", "expanded", "bg-page");
-      nav?.classList.add("hidden");
-      lastChildDiv?.classList.add("hidden");
-    };
-
-    // Écouteurs d'événements
-    toggleMenuButton?.addEventListener("click", toggleMenu);
-    nav?.addEventListener("click", closeMenu);
+    // Ajout des événements
+    openMenuButton.addEventListener("click", openMenu);
+    mobileNav.addEventListener("click", closeMenu);
     window.addEventListener("scroll", handleScroll);
 
     // Initialisation
@@ -89,59 +124,65 @@ const links = [
 
 <header
   id="header"
-  class="sticky flex-shrink-0 top-0 z-40 mx-auto w-full flex-none border-b border-gray-50/0 transition-[opacity] ease-in-out"
-  data-sticky-header
+  class="sticky top-0 z-40 mx-auto w-full flex-shrink-0 transition-all ease-in-out"
 >
+  <!-- Main Navigation -->
   <div
-    class="relative mx-auto w-11/12 max-w-7xl h-[4.5rem] flex items-center"
+    class="mx-auto flex h-[4.5rem] w-11/12 max-w-7xl items-center"
+    id="main-nav"
   >
-    <!-- Logo -->
-    <div class="flex w-full md:w-fit items-center justify-between">
+    <div class="flex w-full items-center justify-between md:w-fit">
       <a class="flex items-center" href="/">
-        <div
-          class="flex items-center gap-2 text-2xl font-bold"
-          data-text-dark
-        >
-          <img src="/logo-white.png" class="size-8" alt="Moodee logo" data-logo-white />
-          <img src="/logo-blue.png" class="size-8" alt="Moodee logo" data-logo-blue />
-
+        <div class="flex items-center gap-2 text-2xl font-bold" data-text-dark>
+          <img
+            src="/logo-white.png"
+            class="size-8"
+            alt="Moodee logo"
+            data-logo-white
+          />
+          <img
+            src="/logo-blue.png"
+            class="size-8"
+            alt="Moodee logo"
+            data-logo-blue
+          />
           <h3 data-moodee-title>Moodee</h3>
         </div>
       </a>
+
       <!-- Mobile Menu Button -->
       <div class="flex items-center md:hidden">
         <button
           type="button"
           class="group flex h-8 w-8 cursor-pointer flex-col items-center justify-center rounded"
-          data-toggle-menu
+          data-open-menu
         >
           <span
-            class="ease my-1 h-0.5 w-6 transform rounded-full bg-black opacity-80 transition duration-200 group-[.expanded]:translate-y-2.5 group-[.expanded]:rotate-45 dark:bg-white"
+            class="ease my-1 h-0.5 w-6 transform rounded-full bg-black opacity-80 transition duration-200 group-[.expanded]:translate-y-2.5 group-[.expanded]:rotate-45"
           ></span>
           <span
-            class="ease my-1 h-0.5 w-6 transform rounded-full bg-black opacity-80 transition duration-200 group-[.expanded]:opacity-0 dark:bg-white"
+            class="ease my-1 h-0.5 w-6 transform rounded-full bg-black opacity-80 transition duration-200 group-[.expanded]:opacity-0"
           ></span>
           <span
-            class="ease my-1 h-0.5 w-6 transform rounded-full bg-black opacity-80 transition duration-200 group-[.expanded]:-translate-y-2.5 group-[.expanded]:-rotate-45 dark:bg-white"
+            class="ease my-1 h-0.5 w-6 transform rounded-full bg-black opacity-80 transition duration-200 group-[.expanded]:-translate-y-2.5 group-[.expanded]:-rotate-45"
           ></span>
         </button>
       </div>
     </div>
 
-    <!-- Navigation -->
     <nav
-      class="hidden items-start md:flex ml-12 md:gap-12"
+      class="text-default hidden w-full items-center overflow-y-auto overflow-x-hidden md:mx-5 md:flex md:w-auto md:justify-self-center md:overflow-x-auto md:overflow-y-visible"
       aria-label="Main navigation"
     >
       <ul
-        class="flex w-full flex-col font-medium md:gap-12 md:flex-row md:justify-center"
+        class="flex w-full flex-col font-medium md:flex-row md:justify-center md:gap-12"
       >
         {
           links.map(({ text, href }) => (
             <li>
               <a
                 href={href}
-                class='text-white hover:text-dark block whitespace-no-wrap',
+                class="whitespace-no-wrap block text-white hover:text-dark"
                 data-text-dark
               >
                 {text}
@@ -152,16 +193,88 @@ const links = [
       </ul>
     </nav>
 
-    <!-- Actions -->
-    <div class="hidden ml-auto items-center justify-end md:flex md:gap-4">
+    <div class="ml-auto hidden items-center justify-end md:flex md:gap-4">
       <a href="#pricing">
-        <button class="rounded-xl px-5 py-2 ring-0 border-2 border-blue bg-blue hover:bg-blue/90 text-white transition-colors">Obtenir une démo</button> 
+        <button
+          class="rounded-xl border-2 border-blue bg-blue px-5 py-2 text-white ring-0 transition-colors hover:bg-blue/90"
+        >
+          Obtenir une démo
+        </button>
       </a>
       <a href="https://moodee.app/" target="_blank">
-        <button class="rounded-xl flex items-center gap-2 px-5 py-2 ring-0 border-2 border-blue text-blue transition-colors" ="">
+        <button
+          class="flex items-center gap-2 rounded-xl border-2 border-blue px-5 py-2 text-blue ring-0 transition-colors"
+        >
           Moodee.app
-          <ArrowUpRight strokeWidth={3} className="size-6" /> </button> 
-      </a>  
+          <ArrowUpRight strokeWidth={3} className="size-6" />
+        </button>
+      </a>
+    </div>
+  </div>
+
+  <!-- Mobile Navigation -->
+  <div class="mx-auto mt-5 hidden h-full w-11/12 space-y-8" id="mobile-nav">
+    <div class="flex w-full items-center justify-between md:w-fit">
+      <a class="flex items-center" href="/">
+        <div class="flex items-center gap-2 text-2xl font-bold">
+          <img src="/logo-blue.png" class="size-8" alt="Moodee logo" />
+          <h3 class="text-blue">Moodee</h3>
+        </div>
+      </a>
+
+      <!-- Mobile Menu Button -->
+      <div class="flex items-center md:hidden">
+        <button
+          type="button"
+          class="group flex h-8 w-8 cursor-pointer flex-col items-center justify-center rounded"
+          data-close-menu
+        >
+          <span
+            class="ease my-1 h-0.5 w-6 translate-y-2.5 rotate-45 transform rounded-full bg-black opacity-80 transition duration-200"
+          ></span>
+          <span
+            class="ease my-1 h-0.5 w-6 transform rounded-full bg-black opacity-0 transition duration-200"
+          ></span>
+          <span
+            class="ease my-1 h-0.5 w-6 -translate-y-2.5 -rotate-45 transform rounded-full bg-black opacity-80 transition duration-200"
+          ></span>
+        </button>
+      </div>
+    </div>
+
+    <ul
+      class="flex w-full flex-col items-start gap-4 border-b border-gray-200 pb-8 font-medium"
+    >
+      {
+        links.map(({ text, href }) => (
+          <li>
+            <a
+              href={href}
+              class="whitespace-no-wrap text-2xl font-bold text-dark hover:text-blue"
+            >
+              {text}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+
+    <div>
+      <a href="#pricing">
+        <button
+          class="mb-2 w-44 rounded-xl border-2 border-blue bg-blue px-5 py-2 text-center text-white ring-0 transition-colors hover:bg-blue/90"
+        >
+          Obtenir une démo
+        </button>
+      </a>
+      <a href="https://moodee.app/" target="_blank">
+        <button
+          class="flex w-44 items-center justify-center gap-2 rounded-xl border-2 border-blue px-5 py-2 text-center text-blue ring-0 transition-colors"
+        >
+          Moodee.app
+          <ArrowUpRight strokeWidth={3} className="size-6" />
+        </button>
+      </a>
     </div>
   </div>
 </header>

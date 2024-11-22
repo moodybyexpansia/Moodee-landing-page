@@ -16,32 +16,9 @@ body {
   background-color: #fff;
 }
 
-/* Sticky header */
-
 #header.scroll {
   @apply bg-white/90 backdrop-blur-xl;
   box-shadow: 0 0.375rem 1.5rem 0 rgba(0, 0, 0, 0.1);
-}
-
-#header.expanded nav {
-  position: fixed;
-  top: 70px;
-  left: 0;
-  right: 0;
-  bottom: 70px !important;
-  padding: 0 5px;
-  color: darkblue;
-}
-
-[data-aw-toggle-menu] path {
-  @apply transition;
-}
-[data-aw-toggle-menu].expanded g > path:first-child {
-  @apply translate-x-[-3px] translate-y-[15px] -rotate-45;
-}
-
-[data-aw-toggle-menu].expanded g > path:last-child {
-  @apply translate-x-[14px] translate-y-[-8px] rotate-45;
 }
 
 .testimonials-custom-gradient {
