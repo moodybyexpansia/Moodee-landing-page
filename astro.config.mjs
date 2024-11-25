@@ -13,8 +13,8 @@ export default defineConfig({
     react(),
     tailwind({ applyBaseStyles: false }),
     sanity({
-      projectId: "your-project-id",
-      dataset: "your-dataset",
+      projectId: "tvk4rnx3",
+      dataset: "production",
       useCdn: false,
     }),
   ],

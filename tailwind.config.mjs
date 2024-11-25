@@ -70,7 +70,10 @@ export default {
       },
     },
   },
-  plugins: [addVariablesForColors, require("tailwindcss-animate")],
+  plugins: [
+    addVariablesForColors,
+    require("tailwindcss-animate", "@tailwindcss/typography"),
+  ],
 };
 
 function addVariablesForColors({ addBase, theme }) {
