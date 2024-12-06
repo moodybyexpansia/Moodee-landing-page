@@ -1,37 +1,64 @@
 ---
-import ReactHoverImages from "../ui/ReactHoverImages";
-
 const steps = [
   {
-    id: 1,
-    title: "Configurez des mots-clés pour une veille concurrentielle efficace",
+    number: 1,
+    title: "Collecte de données sur tous les réseaux",
     description:
-      "Définissez les mots-clés à surveiller pour mieux analyser les discussions autour de votre marque et de vos concurrents. Accédez à des insights précis pour une stratégie marketing éclairée.",
-    image: "/",
+      "Moodee se nourrit de posts, commentaires, avis et actualités de tous les médias sociaux",
+    customClasses: "md:mt-32",
   },
   {
-    id: 2,
-    title: "Suivez vos KPIs stratégiques en temps réel",
+    number: 2,
+    title: "Génération de données améliorées",
     description:
-      "Accédez instantanément à des indicateurs clés de performance pour surveiller votre e-réputation. MoodAI vous aide à suivre l’impact de vos initiatives en ligne pour optimiser votre stratégie digitale.",
-    image: "dashboard-step.png",
+      "Moodee transforme les posts et commentaires en métadonnées enrichies, sentiments clients, mentions d'achat, et bien plus",
+    customClasses: "md:mt-8",
   },
   {
-    id: 3,
-    title: "Utilisez notre chatbot pour piloter votre stratégie digitale",
+    number: 3,
+    title: "Analyse précise des tendances",
     description:
-      "Interagissez avec MoodAI pour obtenir des analyses stratégiques, des tableaux de bord, et des rapports détaillés. Améliorez votre veille concurrentielle et prenez des décisions basées sur des données précises.",
-    image: "chat-step.png",
+      "Moodee extrait des tendances clés pour vous aider à prendre des décisions stratégiques",
+    customClasses: "md:-mt-16",
   },
 ];
 ---
 
-<section id="steps" class="mx-auto w-11/12 max-w-7xl py-24">
-  <h2
-    class="relative mb-12 w-fit text-center text-5xl font-bold md:mx-auto md:mb-24"
-  >
-    Comment ça marche...
-    <span class="absolute -bottom-4 right-8 h-1.5 w-1/2 bg-blue"></span>
-  </h2>
-  <ReactHoverImages steps={steps} client:load />
+<section
+  class="mx-auto bg-[url('/moodee-bg-steps.png')] bg-cover bg-center"
+  id="section"
+>
+  <div class="mx-auto w-11/12 max-w-7xl py-64 text-white">
+    <h2
+      class="mb-6 w-fit text-center text-4xl font-bold md:mb-8 md:max-w-xl md:text-start md:text-5xl lg:max-w-2xl xl:max-w-4xl"
+    >
+      Moodee : L'union parfaite de l'IA et des données média
+    </h2>
+    <p
+      class="mb-12 text-center text-base md:max-w-lg md:text-start lg:max-w-xl xl:max-w-2xl"
+    >
+      Découvrez comment Moodee combine des données ultra précises avec l'IA pour
+      vous offrir le meilleur des deux technologies
+    </p>
+
+    <div class="grid gap-16 md:grid-cols-3">
+      {
+        steps.map(({ number, title, description, customClasses }) => (
+          <div class={`relative flex flex-col items-start ${customClasses}`}>
+            <span class="absolute -top-20 right-4 text-[150px] font-black text-[#53A6FF] md:-right-0 md:-top-16 xl:-top-24 xl:right-8 xl:text-[200px]">
+              {number}
+            </span>
+            <div class="relative flex size-12 items-center justify-center rounded-2xl bg-white xl:size-16 xl:rounded-3xl">
+              <div class="absolute size-4 rounded-xl bg-blue xl:size-6" />
+            </div>
+
+            <h3 class="relative mt-2 text-2xl font-semibold md:mt-6">
+              {title}
+            </h3>
+            <p class="relative mt-2 text-justify">{description}</p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
 </section>

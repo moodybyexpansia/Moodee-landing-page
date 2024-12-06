@@ -1,76 +1,37 @@
 ---
-const features = [
+import ReactHoverImages from "../ui/ReactHoverImages";
+
+const steps = [
   {
-    step: 1,
-    title: "Analysez les mentions produits et suivez votre e-réputation",
+    id: 1,
+    title: "Configurez des mots-clés pour une veille concurrentielle efficace",
     description:
-      "Moodee collecte automatiquement toutes les mentions de votre produit sur une dizaine de réseaux sociaux. Grâce à ses outils avancés de social listening, identifiez les discussions autour de votre marque et surveillez les stratégies digitales de vos concurrents pour affiner votre veille concurrentielle.",
-    bgColor: "bg-blue",
-    textColor: "text-blue-light",
+      "Définissez les mots-clés à surveiller pour mieux analyser les discussions autour de votre marque et de vos concurrents. Accédez à des insights précis pour une stratégie marketing éclairée.",
+    image: "/",
   },
   {
-    step: 2,
-    title:
-      "Obtenez des KPIs en temps réel pour optimiser votre stratégie marketing",
+    id: 2,
+    title: "Suivez vos KPIs stratégiques en temps réel",
     description:
-      "Moodee analyse les données collectées pour vous fournir des indicateurs clés. Ces insights en temps réel vous aident à ajuster vos initiatives en ligne et à maximiser l'impact de votre stratégie marketing, tout en surveillant votre e-réputation.",
-    bgColor: "bg-orange",
-    textColor: "text-orange-light",
+      "Accédez instantanément à des indicateurs clés de performance pour surveiller votre e-réputation. MoodAI vous aide à suivre l’impact de vos initiatives en ligne pour optimiser votre stratégie digitale.",
+    image: "dashboard-step.png",
   },
   {
-    step: 3,
-    title:
-      "Surveillez les tendances pour renforcer votre veille concurrentielle",
+    id: 3,
+    title: "Utilisez notre chatbot pour piloter votre stratégie digitale",
     description:
-      "Moodee surveille en continu les tendances émergentes et les actualités stratégiques sur les réseaux sociaux. Ces données alimentent votre stratégie digitale en vous permettant d’anticiper les mouvements de vos concurrents et de rester à la pointe de l'innovation.",
-    bgColor: "bg-green",
-    textColor: "text-green-light",
-  },
-  {
-    step: 4,
-    title: "Posez vos questions à Moodee pour une stratégie digitale efficace",
-    description:
-      "Moodee vous accompagne dans l'élaboration de votre stratégie digitale grâce à son chatbot intelligent. Posez vos questions pour obtenir des rapports personnalisés sur votre e-réputation, des analyses des tendances marketing, ou des recommandations stratégiques en temps réel. MoodAI est votre allié pour une prise de décision rapide et performante.",
-    bgColor: "bg-purple",
-    textColor: "text-purple-light",
+      "Interagissez avec MoodAI pour obtenir des analyses stratégiques, des tableaux de bord, et des rapports détaillés. Améliorez votre veille concurrentielle et prenez des décisions basées sur des données précises.",
+    image: "chat-step.png",
   },
 ];
 ---
 
-<section class="relative py-24">
-  <div class="relative mx-auto w-11/12 max-w-7xl">
-    <h2
-      class="relative mb-12 w-fit max-w-4xl text-center text-5xl font-bold md:mx-auto md:mb-36"
-    >
-      Une solution pour votre stratégie digitale et votre veille
-      concurrentielle...
-      <span class="absolute -bottom-4 right-8 h-1.5 w-1/2 bg-blue"></span>
-    </h2>
-
-    <div class="grid grid-cols-1 gap-8 md:grid-cols-2 md:gap-24">
-      {
-        features.map((feature) => (
-          <div class="relative flex flex-col items-start">
-            <span
-              class={`absolute -top-20 right-10 text-[150px] font-black ${feature.textColor} md:-top-32 md:right-10 md:text-[200px]`}
-            >
-              {feature.step}
-            </span>
-            <div
-              class={`relative flex h-12 w-12 items-center justify-center rounded-2xl ${feature.bgColor}`}
-            >
-              <div class="absolute h-5 w-5 rounded-full bg-white" />
-            </div>
-
-            <h3 class="relative mt-2 text-2xl font-semibold">
-              {feature.title}
-            </h3>
-            <p class="relative mt-2 text-justify text-lg">
-              {feature.description}
-            </p>
-          </div>
-        ))
-      }
-    </div>
-  </div>
+<section id="steps" class="md-py-16 mx-auto w-11/12 max-w-7xl py-12 lg:py-20">
+  <h2
+    class="relative mb-12 w-fit text-center text-5xl font-bold md:mx-auto md:mb-24"
+  >
+    Comment ça marche...
+    <span class="absolute -bottom-4 right-8 h-1.5 w-1/2 bg-blue"></span>
+  </h2>
+  <ReactHoverImages steps={steps} client:load />
 </section>

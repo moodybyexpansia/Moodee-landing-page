@@ -1,5 +1,4 @@
 ---
-import { YouTube } from "astro-embed";
 import { Calendar } from "lucide-react";
 
 const images = [
@@ -56,52 +55,41 @@ const images = [
 ];
 ---
 
-<section class="py-24">
-  <div class="mx-auto w-11/12 max-w-7xl">
-    <div class="flex flex-col gap-12 lg:flex-row">
-      <div class="mx-auto flex basis-1/2 flex-col items-center justify-center">
-        <h1
-          class="mb-12 text-center text-5xl font-extrabold md:text-6xl lg:text-start"
-          style="text-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);"
-        >
-          L'IA qui capte l'opinion de vos clients en temps réel
-        </h1>
-        <div class="mx-auto max-w-3xl">
-          <p class="text-center text-2xl text-gray-600 lg:text-start">
-            Simplifiez votre stratégie digitale avec Moodee : une veille
-            concurrentielle précise et une e-réputation maîtrisée en un instant.
-          </p>
-        </div>
-      </div>
-      <div class="basis-1/2">
-        <div class="mx-auto max-w-5xl">
-          <YouTube
-            id="gxBkghlglTg"
-            title="Astro just Launched.... Could it be the ultimate web framework?"
-          />
-          <style is:inline>
-            lite-youtube {
-              margin: 0 auto;
-              max-width: 100%;
-            }
-          </style>
-        </div>
-      </div>
-    </div>
-
-    <div class="mx-auto my-20 w-fit">
-      <a href="/">
-        <button
-          class="flex transform items-center gap-8 rounded-xl bg-blue px-12 py-4 font-bold uppercase tracking-widest text-white transition-colors duration-200 hover:scale-105 hover:bg-blue/90"
+<section>
+  <div class="pointer-events-none absolute -top-36 z-0" aria-hidden="true">
+    <img alt="shadow" src="/moodee-shadow-landing.png" />
+  </div>
+  <div class="relative mx-auto w-11/12 max-w-7xl py-12 md:py-16 lg:py-20">
+    <div class="mx-auto max-w-5xl pb-10 text-center md:pb-16">
+      <h1
+        class="mb-4 max-w-6xl text-center text-5xl font-bold leading-tight tracking-tighter text-dark md:text-6xl"
+      >
+        L'IA qui capte l'opinion de vos clients en temps réel
+      </h1>
+      <div class="mx-auto max-w-3xl">
+        <p class="mb-6 text-xl text-[#737791]">
+          Simplifiez votre stratégie digitale avec Moodee : une veille
+          concurrentielle précise et une e-réputation maîtrisée en un instant.
+        </p>
+        <a
+          href="/"
+          class="mx-auto flex w-fit transform items-center gap-8 rounded-xl bg-blue px-12 py-4 font-bold uppercase tracking-widest text-white transition-colors duration-200 hover:scale-105 hover:bg-blue/90"
         >
           <p>Réservez votre démo</p>
           <Calendar />
-        </button>
-      </a>
-      <p class="mt-2 text-center text-sm text-gray-400">
-        Sans engagement, c'est rapide et simple.
-      </p>
+        </a>
+        <p class="mt-1 text-center text-sm text-gray-400">
+          Sans engagement, c'est rapide et simple.
+        </p>
+      </div>
     </div>
+    <video
+      class="mx-auto mb-16 w-full max-w-6xl rounded-3xl shadow-lg"
+      controls
+    >
+      <source src="/demo-moodee-v1.mp4" type="video/mp4" />
+      Votre navigateur ne supporte pas la lecture des vidéos.
+    </video>
 
     <div
       class="mx-auto mb-4 grid grid-cols-2 flex-wrap items-center justify-center gap-x-6 sm:grid-cols-3 md:grid-cols-5"
@@ -121,7 +109,7 @@ const images = [
         )
       }
     </div>
-    <h2 class="mx-auto w-fit text-center text-2xl text-gray-400">
+    <h2 class="mx-auto w-fit text-center text-xl text-gray-400">
       Moodee est connecté à plus de 10 plateformes clés
     </h2>
   </div>
