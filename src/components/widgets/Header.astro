@@ -11,114 +11,142 @@ const links = [
 ];
 ---
 
-<script is:inline>
+<script>
   document.addEventListener("DOMContentLoaded", () => {
-    const header = document.querySelector("#header");
-    const openMenuButton = document.querySelector("[data-open-menu]");
-    const mainNav = document.getElementById("main-nav");
-    const mobileNav = document.getElementById("mobile-nav");
-    const textElements = document.querySelectorAll("[data-text-dark]");
-    const borderElements = document.querySelectorAll("[data-border-dark]");
-    const logoBlue = document.querySelector("[data-logo-blue]");
-    const logoWhite = document.querySelector("[data-logo-white]");
-    const moodeeTitle = document.querySelector("[data-moodee-title]");
+    const header = document.querySelector("#header") as HTMLElement;
+    const openMenuButton = document.querySelector(
+      "[data-open-menu]",
+    ) as HTMLElement | null;
+    const mainNav = document.getElementById("main-nav") as HTMLElement | null;
+    const mobileNav = document.getElementById(
+      "mobile-nav",
+    ) as HTMLElement | null;
+    const textElements = document.querySelectorAll(
+      "[data-text-dark]",
+    ) as NodeListOf<HTMLElement>;
+    const borderElements = document.querySelectorAll(
+      "[data-border-dark]",
+    ) as NodeListOf<HTMLElement>;
+    const logoBlue = document.querySelector(
+      "[data-logo-blue]",
+    ) as HTMLElement | null;
+    const logoWhite = document.querySelector(
+      "[data-logo-white]",
+    ) as HTMLElement | null;
+    const moodeeTitle = document.querySelector(
+      "[data-moodee-title]",
+    ) as HTMLElement | null;
 
-    // Utilitaires pour ajouter et supprimer des classes
-    const addClasses = (element, classes) => element.classList.add(...classes);
-    const removeClasses = (element, classes) =>
-      element.classList.remove(...classes);
+    // Vérification des éléments requis
+    if (!header || !openMenuButton || !mainNav || !mobileNav) {
+      console.error("Required elements are missing from the DOM.");
+      return;
+    }
 
-    // Gérer le défilement et les styles du header
-    const handleScroll = () => {
-      const scrolled = window.scrollY > 60;
+    // Détection de la page d'accueil avec l'URL
+    const isHomePage =
+      window.location.pathname === "/" ||
+      window.location.pathname === "/index.html";
 
-      // Header styles
-      const headerClasses = [
+    // Utilitaire pour basculer des classes
+    const toggleClasses = (
+      element: HTMLElement,
+      classesToAdd: string[],
+      classesToRemove: string[],
+    ) => {
+      element.classList.add(...classesToAdd);
+      element.classList.remove(...classesToRemove);
+    };
+
+    // Appliquer les styles de l'état scrolled
+    const applyScrolledStyles = () => {
+      const scrolledClasses = [
         "bg-white/90",
         "backdrop-blur-lg",
         "shadow-[0_0.375rem_1.5rem_0_rgba(0,0,0,0.1)]",
       ];
-      scrolled
-        ? addClasses(header, headerClasses)
-        : removeClasses(header, headerClasses);
+      toggleClasses(header, scrolledClasses, []);
 
-      // Texte et bordures
       textElements.forEach((el) =>
-        scrolled
-          ? (addClasses(el, ["text-dark"]), removeClasses(el, ["text-white"]))
-          : (addClasses(el, ["text-white"]), removeClasses(el, ["text-dark"])),
+        toggleClasses(el, ["text-dark"], ["text-white"]),
       );
       borderElements.forEach((el) =>
-        scrolled
-          ? (addClasses(el, ["border-dark"]),
-            removeClasses(el, ["border-white"]))
-          : (addClasses(el, ["border-white"]),
-            removeClasses(el, ["border-dark"])),
+        toggleClasses(el, ["border-dark"], ["border-white"]),
       );
 
-      // Logos
-      scrolled
-        ? addClasses(logoWhite, ["hidden"])
-        : removeClasses(logoWhite, ["hidden"]);
-      scrolled
-        ? removeClasses(logoBlue, ["hidden"])
-        : addClasses(logoBlue, ["hidden"]);
-
-      // Moodee Title
-      scrolled
-        ? (addClasses(moodeeTitle, ["text-blue"]),
-          removeClasses(moodeeTitle, ["text-white"]))
-        : (addClasses(moodeeTitle, ["text-white"]),
-          removeClasses(moodeeTitle, ["text-blue"]));
+      toggleClasses(logoWhite!, ["hidden"], []);
+      toggleClasses(logoBlue!, [], ["hidden"]);
+      toggleClasses(moodeeTitle!, ["text-blue"], ["text-white"]);
     };
 
-    // Ouvrir le menu mobile
+    // Réinitialiser les styles (état non scrolled)
+    const resetScrolledStyles = () => {
+      const scrolledClasses = [
+        "bg-white/90",
+        "backdrop-blur-lg",
+        "shadow-[0_0.375rem_1.5rem_0_rgba(0,0,0,0.1)]",
+      ];
+      toggleClasses(header, [], scrolledClasses);
+
+      textElements.forEach((el) =>
+        toggleClasses(el, ["text-white"], ["text-dark"]),
+      );
+      borderElements.forEach((el) =>
+        toggleClasses(el, ["border-white"], ["border-dark"]),
+      );
+
+      toggleClasses(logoWhite!, [], ["hidden"]);
+      toggleClasses(logoBlue!, ["hidden"], []);
+      toggleClasses(moodeeTitle!, ["text-white"], ["text-blue"]);
+    };
+
+    // Gérer le défilement uniquement sur la page d'accueil
+    const handleScroll = () => {
+      if (!isHomePage) return;
+      const scrolled = window.scrollY > 60;
+      scrolled ? applyScrolledStyles() : resetScrolledStyles();
+    };
+
+    // Gérer le menu mobile
     const openMenu = () => {
-      addClasses(document.body, ["overflow-hidden"]);
-      addClasses(header, ["h-screen", "bg-white/90"]);
-      addClasses(mainNav, ["hidden"]);
-      removeClasses(mainNav, ["flex"]);
-      removeClasses(mobileNav, ["hidden"]);
-      addClasses(mobileNav, [
-        "flex",
-        "flex-col",
-        "items-start",
-        "justify-start",
-      ]);
-
-      // Écouteur pour clic en dehors
-      document.addEventListener("click", handleOutsideClick);
+      toggleClasses(document.body, ["overflow-hidden"], []);
+      toggleClasses(header, ["h-screen", "bg-white/90"], []);
+      toggleClasses(mainNav, ["hidden"], ["flex"]);
+      toggleClasses(mobileNav, ["flex"], ["hidden"]);
+      openMenuButton.setAttribute("aria-expanded", "true");
     };
 
-    // Fermer le menu mobile
     const closeMenu = () => {
-      removeClasses(document.body, ["overflow-hidden"]);
-      removeClasses(header, ["h-screen", "bg-white/90"]);
-      removeClasses(mainNav, ["hidden"]);
-      addClasses(mainNav, ["flex"]);
-      addClasses(mobileNav, ["hidden"]);
-
-      // Retirer l'écouteur pour clic en dehors
-      document.removeEventListener("click", handleOutsideClick);
+      toggleClasses(document.body, [], ["overflow-hidden"]);
+      toggleClasses(header, [], ["h-screen", "bg-white/90"]);
+      toggleClasses(mainNav, ["flex"], ["hidden"]);
+      toggleClasses(mobileNav, ["hidden"], ["flex"]);
+      openMenuButton.setAttribute("aria-expanded", "false");
     };
 
-    // Gestion des clics en dehors du menu
-    const handleOutsideClick = (event) => {
-      if (
-        !mobileNav.contains(event.target) &&
-        !openMenuButton.contains(event.target)
-      ) {
-        closeMenu();
+    // Gestion des clics en dehors
+    document.addEventListener("click", (event) => {
+      const target = event.target;
+      if (target instanceof Node) {
+        const isOutside =
+          !mobileNav.contains(target) && !openMenuButton.contains(target);
+
+        if (isOutside && mobileNav.classList.contains("flex")) {
+          closeMenu();
+        }
       }
-    };
+    });
 
-    // Ajout des événements
+    // Initialisation au chargement
+    if (!isHomePage) {
+      applyScrolledStyles();
+    } else {
+      handleScroll();
+      window.addEventListener("scroll", handleScroll);
+    }
+
     openMenuButton.addEventListener("click", openMenu);
     mobileNav.addEventListener("click", closeMenu);
-    window.addEventListener("scroll", handleScroll);
-
-    // Initialisation
-    handleScroll();
   });
 </script>
 
@@ -142,11 +170,11 @@ const links = [
           />
           <img
             src="/logo-blue.png"
-            class="size-8"
+            class="hidden size-8"
             alt="Moodee logo"
             data-logo-blue
           />
-          <h3 data-moodee-title>Moodee</h3>
+          <h3 data-moodee-title class="transition-colors">Moodee</h3>
         </div>
       </a>
 
@@ -156,15 +184,16 @@ const links = [
           type="button"
           class="group flex h-8 w-8 cursor-pointer flex-col items-center justify-center rounded"
           data-open-menu
+          aria-expanded="false"
         >
           <span
-            class="ease my-1 h-0.5 w-6 transform rounded-full bg-black opacity-80 transition duration-200 group-[.expanded]:translate-y-2.5 group-[.expanded]:rotate-45"
+            class="ease my-1 h-0.5 w-6 transform rounded-full bg-black opacity-80 transition duration-200"
           ></span>
           <span
-            class="ease my-1 h-0.5 w-6 transform rounded-full bg-black opacity-80 transition duration-200 group-[.expanded]:opacity-0"
+            class="ease my-1 h-0.5 w-6 transform rounded-full bg-black opacity-80 transition duration-200"
           ></span>
           <span
-            class="ease my-1 h-0.5 w-6 transform rounded-full bg-black opacity-80 transition duration-200 group-[.expanded]:-translate-y-2.5 group-[.expanded]:-rotate-45"
+            class="ease my-1 h-0.5 w-6 transform rounded-full bg-black opacity-80 transition duration-200"
           ></span>
         </button>
       </div>
@@ -172,6 +201,7 @@ const links = [
 
     <nav
       class="text-default hidden w-full items-center overflow-y-auto overflow-x-hidden lg:mx-5 lg:flex lg:w-auto lg:justify-self-center lg:overflow-x-auto lg:overflow-y-visible"
+      role="navigation"
       aria-label="Main navigation"
     >
       <ul
@@ -194,12 +224,12 @@ const links = [
     </nav>
 
     <div class="ml-auto hidden items-center justify-end lg:flex lg:gap-4">
-      <a href="#pricing">
-        <button
-          class="rounded-xl border-2 border-blue bg-blue px-5 py-2 text-white ring-0 transition-colors hover:bg-blue/90"
-        >
-          Obtenir une démo
-        </button>
+      <a
+        href="https://kgiknx4xq2i.typeform.com/to/tvtyFXT3?typeform-source=moodee.eu"
+        target="_blank"
+        class="rounded-xl border-2 border-blue bg-blue px-5 py-2 text-white ring-0 transition-colors hover:bg-blue/90"
+      >
+        Obtenir une démo
       </a>
       <a href="https://moodee.app/" target="_blank">
         <button
@@ -213,7 +243,10 @@ const links = [
   </div>
 
   <!-- Mobile Navigation -->
-  <div class="mx-auto mt-5 hidden h-full w-11/12 space-y-8" id="mobile-nav">
+  <div
+    class="mx-auto mt-5 hidden h-full w-11/12 flex-col space-y-8"
+    id="mobile-nav"
+  >
     <div class="flex w-full items-center justify-between">
       <a class="flex items-center" href="/">
         <div class="flex items-center gap-2 text-2xl font-bold">
@@ -221,8 +254,6 @@ const links = [
           <h3 class="text-blue">Moodee</h3>
         </div>
       </a>
-
-      <!-- Mobile Menu Button -->
       <div class="flex items-center lg:hidden">
         <button
           type="button"
@@ -259,20 +290,19 @@ const links = [
       }
     </ul>
 
-    <div>
-      <a href="#pricing">
-        <button
-          class="mb-2 w-44 rounded-xl border-2 border-blue bg-blue px-5 py-2 text-center text-white ring-0 transition-colors hover:bg-blue/90"
-        >
-          Obtenir une démo
-        </button>
+    <div class="flex flex-col gap-2">
+      <a
+        href="https://kgiknx4xq2i.typeform.com/to/tvtyFXT3?typeform-source=moodee.eu"
+        target="_blank"
+        class="w-44 rounded-xl border-2 border-blue bg-blue px-5 py-2 text-center text-white ring-0 transition-colors hover:bg-blue/90"
+      >
+        Obtenir une démo
       </a>
       <a href="https://moodee.app/" target="_blank">
         <button
           class="flex w-44 items-center justify-center gap-2 rounded-xl border-2 border-blue px-5 py-2 text-center text-blue ring-0 transition-colors"
         >
           Moodee.app
-          <ArrowUpRight strokeWidth={3} className="size-6" />
         </button>
       </a>
     </div>

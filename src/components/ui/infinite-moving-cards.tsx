@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
+import type { TestimonialType } from "@/types/sanityTypes";
 import { Star } from "lucide-react";
 import React, { useEffect, useState } from "react";
-import type { Testimonial } from "../widgets/Testimonials.astro";
 
 export const InfiniteMovingCards = ({
   items,
@@ -10,7 +10,7 @@ export const InfiniteMovingCards = ({
   pauseOnHover = true,
   className,
 }: {
-  items: Testimonial[];
+  items: TestimonialType[];
   direction?: "left" | "right";
   speed?: "fast" | "normal" | "slow";
   pauseOnHover?: boolean;
@@ -84,31 +84,31 @@ export const InfiniteMovingCards = ({
         {items.map((item, idx) => (
           <li
             className="group relative flex w-80 max-w-full flex-shrink-0 flex-col justify-between space-y-4 rounded-3xl bg-white px-8 py-6 text-blue shadow-sm transition-colors hover:bg-blue hover:text-white sm:w-96 md:w-[500px]"
-            key={item.name}
+            key={idx}
           >
             <h3 className="text-xl font-bold">
               {item.title || "Titre non défini"}
             </h3>
 
             <blockquote className="text-sm font-light leading-5">
-              {item.avis}
+              {item.content}
             </blockquote>
 
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-4">
-                {item.image && (
+                {item.authorImageUrl && (
                   <img
-                    src={item.image.src}
+                    src={item.authorImageUrl}
                     className="h-16 w-16 rounded-full border border-gray-200 object-cover"
                     width={64}
                     height={64}
-                    alt={item.image.alt}
+                    alt={item.author}
                   />
                 )}
                 <div className="flex flex-col">
-                  <p className="text-base font-bold">{item.name}</p>
+                  <p className="text-base font-bold">{item.author}</p>
                   <p className="text-sm text-gray-500 group-hover:text-gray-200">
-                    {item.job}
+                    {item.position}
                   </p>
                 </div>
               </div>

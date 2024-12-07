@@ -1,49 +1,69 @@
 ---
 import Layout from "@/layouts/Layout.astro";
-import type { SanityDocument } from "@sanity/client";
+import { type PromptType } from "@/types/sanityTypes";
 import { sanityClient } from "sanity:client";
 
-const POSTS_QUERY = `*[
-  _type == "post"
+const PROMPTS_QUERY = `*[
+  _type == "prompt"
   && defined(slug.current)
-]|order(publishedAt desc)[0...12]{
-  _id,
-  title,
-  _updatedAt,
-  slug,
-  "imageUrl": image.asset->url,
+]|order(publishedAt desc)[0...6]{
+ ...,
+   "imageUrl": image.asset->url 
 }`;
 
 // Récupération des articles via le client Sanity
-const posts = await sanityClient.fetch<SanityDocument[]>(POSTS_QUERY);
+const prompts = await sanityClient.fetch<PromptType[]>(PROMPTS_QUERY);
 ---
 
 <Layout title="Resources">
-  <section class="mx-auto w-11/12 max-w-7xl py-24">
-    <ul class="mx-auto grid max-w-7xl grid-cols-1 gap-6 md:grid-cols-3">
-      {
-        posts.map((post) => (
-          <li class="group/bento shadow-input row-span-1 flex flex-col justify-between rounded-xl transition duration-200">
-            <a href={"/resources/" + post.slug.current}>
-              <div class="transition duration-200 group-hover/bento:translate-x-2">
-                {post.imageUrl && (
+  <section class="mx-auto w-11/12 max-w-7xl space-y-12 py-12 md:py-16 lg:py-20">
+    <div
+      class="rounded-[3rem] bg-[url('/moodee-bg-blog.png')] bg-center py-8 text-center"
+    >
+      <h1 class="mb-4 text-center text-5xl font-bold">Le blog Moodee</h1>
+      <p class="font-bold">
+        Décryptez l'actualité et les tendances du social listening avec l'IA
+      </p>
+      <p class="mx-auto max-w-3xl text-sm text-gray-500">
+        Ici, retrouvrez vos ressources pour tout savoir sur l’univers du social
+        listening, de l’intelligence artificielle, et de l’analyse des médias
+        sociaux. Ici, nous partageons des actualités, des insights pratiques, et
+        des analyses approfondies pour vous aider à tirer le meilleur parti des
+        données numériques.
+      </p>
+    </div>
+
+    <div class="rounded-[3rem] border border-blue px-10 py-8">
+      <h3 class="text-3xl font-bold">Prompts</h3>
+      <p>
+        Suivez les étapes ci-dessous afin de configurer votre analyser
+        rapidement et efficacement
+      </p>
+      <ul
+        class="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+      >
+        {
+          prompts.map((prompt) => (
+            <li class="group/bento rounded-xl transition duration-200 hover:translate-x-2">
+              <a href={"/resources/" + prompt.slug.current}>
+                {prompt.imageUrl && (
                   <img
-                    src={post.imageUrl}
-                    alt={post.title}
-                    class="size-64 rounded-3xl object-cover"
+                    src={prompt.imageUrl}
+                    alt={prompt.title}
+                    class="h-40 w-full rounded-3xl object-cover"
                   />
                 )}
-                <div class="mb-2 mt-2 font-sans font-bold text-neutral-600 dark:text-neutral-200">
-                  {post.title}
+                <div class="mb-1 mt-2 font-sans font-bold leading-tight text-blue dark:text-neutral-200">
+                  {prompt.title}
                 </div>
-                <div class="font-sans text-xs font-normal text-neutral-600 dark:text-neutral-300">
-                  {post._updatedAt}
+                <div class="line-clamp-3 text-xs font-normal text-gray-400">
+                  {prompt.prompt}
                 </div>
-              </div>
-            </a>
-          </li>
-        ))
-      }
-    </ul>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
   </section>
 </Layout>
