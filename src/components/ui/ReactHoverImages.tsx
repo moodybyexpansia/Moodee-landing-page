@@ -1,5 +1,4 @@
 import { cn } from "@/lib/utils";
-import { ChartArea, MessageCircleIcon, Settings } from "lucide-react";
 import React, { useState } from "react";
 
 // Définition du type pour chaque feature
@@ -20,31 +19,31 @@ const ReactHoverImages: React.FC<ReactHoverImagesProps> = ({ steps }) => {
   const [currentImage, setCurrentImage] = useState<string>(steps[0].image);
 
   return (
-    <div className="grid items-center gap-10 md:grid-cols-2">
+    <div className="grid items-center gap-10 md:grid-cols-2 lg:grid-cols-5">
       {/* Liste des fonctionnalités */}
-      <div className="space-y-6">
+      <div className="space-y-6 lg:col-span-2">
         {steps.map((step) => (
           <div
             key={step.id}
             className={cn(
-              currentImage === step.image && "shadow-full bg-white",
-              "group flex h-auto items-start gap-4 rounded-3xl p-6",
+              currentImage === step.image && "bg-white shadow-full",
+              "group flex h-40 items-center gap-4 rounded-3xl p-6",
             )}
             onMouseEnter={() => setCurrentImage(step.image)}
           >
             {step.id === 1 && (
-              <div className="w-fit rounded-full bg-purple-light p-3">
-                <Settings className="size-6 fill-purple-light text-purple" />
+              <div className="w-fit rounded-full bg-purple-light p-4">
+                <img src="/Folder.png" alt="folder" className="h-auto w-20" />
               </div>
             )}
             {step.id === 2 && (
-              <div className="w-fit rounded-full bg-green-light p-3">
-                <ChartArea className="size-6 fill-green-light text-green" />
+              <div className="w-fit rounded-full bg-[#D5F2D5] p-4">
+                <img src="/Tick.png" alt="tick" className="h-auto w-[4.5rem]" />
               </div>
             )}
             {step.id === 3 && (
-              <div className="w-fit rounded-full bg-orange-light p-3">
-                <MessageCircleIcon className="size-6 fill-orange-light text-orange" />
+              <div className="w-fit rounded-full bg-orange-light p-4">
+                <img src="/Star.png" alt="star" className="h-auto w-24" />
               </div>
             )}
             <div className="space-y-2">
@@ -66,7 +65,11 @@ interface ImageDisplayProps {
 }
 
 export const ImageDisplay: React.FC<ImageDisplayProps> = ({ image }) => (
-  <img src={image} alt="Feature illustration" className="h-auto w-full" />
+  <img
+    src={image}
+    alt="Feature illustration"
+    className="w-[40rem] lg:col-span-3"
+  />
 );
 
 export default ReactHoverImages;

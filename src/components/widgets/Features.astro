@@ -4,34 +4,31 @@ import ReactHoverImages from "../ui/ReactHoverImages";
 const steps = [
   {
     id: 1,
-    title: "Configurez des mots-clés pour une veille concurrentielle efficace",
+    title: "Données multi-plateformes",
     description:
-      "Définissez les mots-clés à surveiller pour mieux analyser les discussions autour de votre marque et de vos concurrents. Accédez à des insights précis pour une stratégie marketing éclairée.",
-    image: "/",
+      "Réseaux sociaux, actualités, avis clients... Tout en un seul endroit.",
+    image: "moodee-feature-1.png",
   },
   {
     id: 2,
-    title: "Suivez vos KPIs stratégiques en temps réel",
-    description:
-      "Accédez instantanément à des indicateurs clés de performance pour surveiller votre e-réputation. MoodAI vous aide à suivre l’impact de vos initiatives en ligne pour optimiser votre stratégie digitale.",
-    image: "dashboard-step.png",
+    title: "Données en temps réel",
+    description: "Posez vos questions, notre IA vous répond instantanément.",
+    image: "moodee-feature-2.png",
   },
   {
     id: 3,
-    title: "Utilisez notre chatbot pour piloter votre stratégie digitale",
+    title: "KPIs sur mesure",
     description:
-      "Interagissez avec MoodAI pour obtenir des analyses stratégiques, des tableaux de bord, et des rapports détaillés. Améliorez votre veille concurrentielle et prenez des décisions basées sur des données précises.",
-    image: "chat-step.png",
+      "Créez des indicateurs clés de performance selon vos besoins spécifiques",
+    image: "moodee-feature-3.png",
   },
 ];
 ---
 
-<section id="steps" class="md-py-16 mx-auto w-11/12 max-w-7xl py-12 lg:py-20">
-  <h2
-    class="relative mb-12 w-fit text-center text-5xl font-bold md:mx-auto md:mb-24"
-  >
-    Comment ça marche...
-    <span class="absolute -bottom-4 right-8 h-1.5 w-1/2 bg-blue"></span>
+<section id="steps" class="mx-auto w-11/12 max-w-7xl py-12 md:py-16 lg:py-20">
+  <h2 class="relative mb-12 w-fit text-center text-5xl font-bold md:mx-auto">
+    Pourquoi choisir Moodee ?
+    <span class="absolute -bottom-4 right-8 h-1.5 w-1/3 bg-blue"></span>
   </h2>
   <ReactHoverImages steps={steps} client:load />
 </section>
