@@ -1,0 +1,41 @@
+---
+import { PromptsCards } from "@/components/ui/prompts-cards";
+import Layout from "@/layouts/Layout.astro";
+import { type PromptType } from "@/types/sanityTypes";
+import { sanityClient } from "sanity:client";
+
+const PROMPTS_QUERY = `*[
+  _type == "prompt"
+  && defined(slug.current)
+]|order(publishedAt desc){
+ ...,
+   "imageUrl": image.asset->url 
+}`;
+
+// Récupération des articles via le client Sanity
+const prompts = await sanityClient.fetch<PromptType[]>(PROMPTS_QUERY);
+---
+
+<Layout title="Prompts">
+  <section class="mx-auto w-11/12 max-w-7xl space-y-12 py-12 md:py-16 lg:py-20">
+    <div
+      class="rounded-[3rem] bg-[url('/moodee-bg-blog.png')] bg-center py-8 text-center"
+    >
+      <h1 class="mb-4 text-center text-5xl font-bold">
+        Découvrir tous nos prompts
+      </h1>
+      <p class="font-bold">
+        Décryptez l'actualité et les tendances du social listening avec l'IA
+      </p>
+      <p class="mx-auto max-w-3xl text-sm text-gray-500">
+        Ici, retrouvrez vos ressources pour tout savoir sur l’univers du social
+        listening, de l’intelligence artificielle, et de l’analyse des médias
+        sociaux. Ici, nous partageons des actualités, des insights pratiques, et
+        des analyses approfondies pour vous aider à tirer le meilleur parti des
+        données numériques.
+      </p>
+    </div>
+
+    <PromptsCards prompts={prompts} client:load />
+  </section>
+</Layout>

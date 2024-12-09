@@ -1,0 +1,101 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import { calculateReadingTime, portableTextToPlainText } from "@/lib/utils";
+import type { ArticleType } from "@/types/sanityTypes";
+import { PortableText } from "astro-portabletext";
+import { sanityClient } from "sanity:client";
+
+const ARTICLE_QUERY = `*[_type == "article" && slug.current == $slug][0]{
+  ...,
+  "imageUrl": image.asset->url,
+}`;
+
+const article = await sanityClient.fetch<ArticleType>(
+  ARTICLE_QUERY,
+  Astro.params,
+);
+
+export async function getStaticPaths(): Promise<{ params: { slug: string } }> {
+  const SLUGS_QUERY = `*[_type == "article" && defined(slug.current)]{
+    "params": {"slug": slug.current}
+  }`;
+  return await sanityClient.fetch(SLUGS_QUERY, Astro.params);
+}
+---
+
+<Layout title={article.title}>
+  <section class="mx-auto w-11/12 max-w-7xl py-24">
+    <div class="grid grid-cols-3 gap-6">
+      <div
+        class="relative col-span-full overflow-hidden rounded-[2rem] shadow-lg md:col-span-2"
+      >
+        <img
+          src={article.imageUrl}
+          alt={article.title}
+          class="h-96 w-full object-cover"
+        />
+
+        <div
+          class="absolute bottom-0 left-0 right-0 space-y-2 bg-black bg-opacity-40 p-4 text-white backdrop-blur-md"
+        >
+          <h2 class="text-xl font-semibold">
+            {article.title}
+          </h2>
+
+          <div class="text-sm font-normal">
+            {
+              new Date(article.date).toLocaleDateString("fr-FR", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              })
+            }
+            {" • "}
+            {
+              calculateReadingTime(portableTextToPlainText(article.content)) +
+                " min de lecture"
+            }
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="relative col-span-full overflow-hidden rounded-[2rem] shadow-lg md:col-span-1"
+      >
+        <img
+          src="/moodee-bg-prompt-page.png"
+          alt="Moodee background"
+          class="h-80 w-full md:h-96 md:object-cover"
+        />
+
+        <div class="absolute left-0 right-0 top-0 space-y-2 p-6">
+          <img
+            src="/vincent-ryckbosch.jpeg"
+            alt="Vincent Ryckbosch"
+            class="size-20 rounded-full"
+          />
+          <p class="text-lg font-semibold">Vincent RYCKBOSCH</p>
+          <p class="leading-tight text-blue">
+            CEO @ Moodee | Le premier outil IA de veille concurrentielle et de
+            suivi d’e-reputation
+          </p>
+          <div class="w-4/5 border-b border-blue"></div>
+          <p class="text-justify text-sm text-blue">
+            “Chez Moodee, nous transformons le social listening grâce à l'IA !
+            Une solution simple et diaboliquement efficace permet à nos clients
+            de dominer le marché en comprenant profondément et rapidement les
+            dynamiques des réseaux sociaux.
+          </p>
+        </div>
+      </div>
+
+      <div class="col-span-2 space-y-3 text-dark">
+        {
+          Array.isArray(article.content) && (
+            <PortableText value={article.content} />
+          )
+        }
+      </div>
+    </div>
+  </section>
+</Layout>

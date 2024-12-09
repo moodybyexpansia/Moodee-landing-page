@@ -137,14 +137,29 @@ const planStyles: Record<
 
                 <p class="mb-2 font-bold">Ce qui est inclus :</p>
                 <ul class="space-y-4 text-left">
-                  {items.map(({ description }) => (
-                    <li class="flex items-center gap-2 text-gray-500">
-                      <div class={`rounded-full p-1 ${styles.bgColor}`}>
-                        <Check className="size-4 text-white" />
-                      </div>
-                      <span>{description}</span>
-                    </li>
-                  ))}
+                  {items.map(({ description }) => {
+                    const regex = /(\d+|sur mesure)/gi;
+                    const parts = description.split(regex);
+
+                    return (
+                      <li class="flex items-center gap-2 text-gray-500">
+                        <div class={`rounded-full p-1 ${styles.bgColor}`}>
+                          <Check className="size-4 text-white" />
+                        </div>
+                        <span>
+                          {parts.map((part, index) =>
+                            regex.test(part) ? (
+                              <span class={`px-1 ${styles.bgColor}`}>
+                                <span class="text-white">{part}</span>
+                              </span>
+                            ) : (
+                              <span>{part}</span>
+                            ),
+                          )}
+                        </span>
+                      </li>
+                    );
+                  })}
                 </ul>
 
                 <Button

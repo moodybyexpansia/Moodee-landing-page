@@ -1,0 +1,92 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import { calculateReadingTime, portableTextToPlainText } from "@/lib/utils";
+import { type ArticleType } from "@/types/sanityTypes";
+import { sanityClient } from "sanity:client";
+
+const ARTICLES_QUERY = `*[
+  _type == "article"
+  && defined(slug.current)
+]|order(publishedAt desc){
+ ...,
+   "imageUrl": image.asset->url 
+}`;
+
+// Récupération des articles via le client Sanity
+const articles = await sanityClient.fetch<ArticleType[]>(ARTICLES_QUERY);
+
+const bgColors = [
+  "bg-green-light",
+  "bg-orange-light",
+  "bg-purple-light",
+  "bg-blue-light",
+];
+// Return both hover and base colors as a string
+const getColorClass = (index: number) => {
+  const bgColor = bgColors[index % bgColors.length];
+  return bgColor;
+};
+---
+
+<Layout title="Articles">
+  <section class="mx-auto w-11/12 max-w-7xl space-y-12 py-12 md:py-16 lg:py-20">
+    <div
+      class="rounded-[3rem] bg-[url('/moodee-bg-blog.png')] bg-center py-8 text-center"
+    >
+      <h1 class="mb-4 text-center text-5xl font-bold">
+        Lire tous nos articles
+      </h1>
+      <p class="font-bold">
+        Décryptez l'actualité et les tendances du social listening avec l'IA
+      </p>
+      <p class="mx-auto max-w-3xl text-sm text-gray-500">
+        Ici, retrouvrez vos ressources pour tout savoir sur l’univers du social
+        listening, de l’intelligence artificielle, et de l’analyse des médias
+        sociaux. Ici, nous partageons des actualités, des insights pratiques, et
+        des analyses approfondies pour vous aider à tirer le meilleur parti des
+        données numériques.
+      </p>
+    </div>
+
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      {
+        articles.map((article, index) => {
+          // Obtenez la classe de couleur basée sur l'index
+          const bgColor = getColorClass(index);
+
+          return (
+            <a
+              href={"/resources/articles/" + article.slug.current}
+              class={`space-y-2 rounded-3xl transition-all hover:translate-x-2 ${bgColor}`}
+            >
+              {article.imageUrl && (
+                <img
+                  src={article.imageUrl}
+                  alt={article.title}
+                  class="h-32 w-full rounded-3xl object-cover"
+                  loading="lazy"
+                />
+              )}
+              <div class="px-4 py-3">
+                <p class="mb-1 mt-2 font-sans text-xl font-semibold leading-tight">
+                  {article.title}
+                </p>
+                <div class="text-sm font-normal">
+                  {new Date(article.date).toLocaleDateString("fr-FR", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  })}
+                  {" • "}
+                  {calculateReadingTime(
+                    portableTextToPlainText(article.content),
+                  ) + " min de lecture"}
+                </div>
+              </div>
+            </a>
+          );
+        })
+      }
+    </div>
+  </section>
+</Layout>

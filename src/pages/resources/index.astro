@@ -1,6 +1,8 @@
 ---
 import Layout from "@/layouts/Layout.astro";
-import { type PromptType } from "@/types/sanityTypes";
+import { type ArticleType, type PromptType } from "@/types/sanityTypes";
+import { PortableText } from "astro-portabletext";
+import { MoveRight } from "lucide-react";
 import { sanityClient } from "sanity:client";
 
 const PROMPTS_QUERY = `*[
@@ -11,8 +13,17 @@ const PROMPTS_QUERY = `*[
    "imageUrl": image.asset->url 
 }`;
 
+const ARTICLES_QUERY = `*[
+  _type == "article"
+  && defined(slug.current)
+]|order(publishedAt desc)[0...6]{
+ ...,
+   "imageUrl": image.asset->url 
+}`;
+
 // Récupération des articles via le client Sanity
 const prompts = await sanityClient.fetch<PromptType[]>(PROMPTS_QUERY);
+const articles = await sanityClient.fetch<ArticleType[]>(ARTICLES_QUERY);
 ---
 
 <Layout title="Resources">
@@ -32,34 +43,82 @@ const prompts = await sanityClient.fetch<PromptType[]>(PROMPTS_QUERY);
         données numériques.
       </p>
     </div>
-
     <div class="rounded-[3rem] border border-blue px-10 py-8">
-      <h3 class="text-3xl font-bold">Prompts</h3>
-      <p>
-        Suivez les étapes ci-dessous afin de configurer votre analyser
-        rapidement et efficacement
-      </p>
-      <ul
-        class="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
-      >
+      <div class="flex items-center justify-between gap-4">
+        <div class="flex-1">
+          <h3 class="text-3xl font-bold">Prompts</h3>
+          <p class="text-sm md:text-base">
+            Suivez les étapes ci-dessous afin de configurer votre analyser
+            rapidement et efficacement
+          </p>
+        </div>
+        <a
+          class="flex items-center gap-2 font-bold text-blue lg:gap-4"
+          href="/resources/prompts"
+        >
+          <p>Voir tous</p>
+          <MoveRight className="size-6" strokeWidth={3} />
+        </a>
+      </div>
+      <ul class="mt-6 flex items-center gap-6 overflow-x-scroll">
         {
           prompts.map((prompt) => (
-            <li class="group/bento rounded-xl transition duration-200 hover:translate-x-2">
-              <a href={"/resources/" + prompt.slug.current}>
-                {prompt.imageUrl && (
-                  <img
-                    src={prompt.imageUrl}
-                    alt={prompt.title}
-                    class="h-40 w-full rounded-3xl object-cover"
-                  />
+            <li class="min-w-64 rounded-xl">
+              {prompt.imageUrl && (
+                <img
+                  src={prompt.imageUrl}
+                  alt={prompt.title}
+                  class="h-40 w-full rounded-3xl object-cover"
+                />
+              )}
+              <div class="mb-1 mt-2 font-sans font-bold leading-tight text-blue dark:text-neutral-200">
+                {prompt.title}
+              </div>
+              <div class="line-clamp-3 text-xs font-normal text-gray-400">
+                {prompt.prompt}
+              </div>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <div class="rounded-[3rem] border border-blue px-10 py-8">
+      <div class="flex items-center justify-between gap-4">
+        <div class="flex-1">
+          <h3 class="text-3xl font-bold">Articles</h3>
+          <p class="text-sm md:text-base">
+            Suivez les étapes ci-dessous afin de configurer votre analyser
+            rapidement et efficacement
+          </p>
+        </div>
+        <a
+          class="flex items-center gap-2 font-bold text-blue lg:gap-4"
+          href="/resources/articles"
+        >
+          <p>Voir tous</p>
+          <MoveRight className="size-6" strokeWidth={3} />
+        </a>
+      </div>
+      <ul class="mt-6 flex items-center gap-6 overflow-x-scroll">
+        {
+          articles.map((article) => (
+            <li class="min-w-64 rounded-xl">
+              {article.imageUrl && (
+                <img
+                  src={article.imageUrl}
+                  alt={article.title}
+                  class="h-40 w-full rounded-3xl object-cover"
+                />
+              )}
+              <div class="mb-1 mt-2 font-sans font-bold leading-tight text-blue dark:text-neutral-200">
+                {article.title}
+              </div>
+              <div class="prose line-clamp-3 text-xs font-normal text-gray-400">
+                {Array.isArray(article.content) && (
+                  <PortableText value={article.content} />
                 )}
-                <div class="mb-1 mt-2 font-sans font-bold leading-tight text-blue dark:text-neutral-200">
-                  {prompt.title}
-                </div>
-                <div class="line-clamp-3 text-xs font-normal text-gray-400">
-                  {prompt.prompt}
-                </div>
-              </a>
+              </div>
             </li>
           ))
         }
