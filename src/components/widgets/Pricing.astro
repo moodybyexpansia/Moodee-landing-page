@@ -1,6 +1,5 @@
 ---
 import { Check, Crown, Star, Wrench } from "lucide-react";
-import { Button } from "../ui/button";
 
 const plans: {
   shortTitle: "starter" | "pro" | "premium";
@@ -162,11 +161,12 @@ const planStyles: Record<
                   })}
                 </ul>
 
-                <Button
-                  className={`mt-6 ${styles.bgColor} hover:${styles.bgColor}`}
+                <a
+                  href="https://moodee.app/auth/signup"
+                  class={`mt-6 ${styles.bgColor} hover:${styles.bgColor} inline-flex h-9 items-center justify-center gap-2 whitespace-nowrap rounded-lg px-4 py-2 text-sm font-medium text-white transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0`}
                 >
                   Essayer 7 jours
-                </Button>
+                </a>
               </div>
             );
           },

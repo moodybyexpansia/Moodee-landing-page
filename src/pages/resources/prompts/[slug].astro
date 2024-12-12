@@ -11,6 +11,7 @@ import { sanityClient } from "sanity:client";
 const PROMPT_QUERY = `*[_type == "prompt" && slug.current == $slug][0]{
   ...,
   "imageUrl": image.asset->url,
+  "response": response.asset->url,
 }`;
 
 const prompt = await sanityClient.fetch<PromptType>(PROMPT_QUERY, Astro.params);
@@ -116,7 +117,7 @@ export async function getStaticPaths(): Promise<{ params: { slug: string } }> {
         <p class="text-justify">{prompt.prompt}</p>
 
         <p class="font-bold">Réponse</p>
-        <p class="text-justify">{prompt.response}</p>
+        <img src={prompt.response} alt="reponse du chat" />
       </div>
     </div>
   </section>
