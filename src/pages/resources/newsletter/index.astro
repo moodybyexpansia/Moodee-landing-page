@@ -1,4 +1,7 @@
 ---
+// Activez le mode SSR en Astro
+export const prerender = false;
+
 import Layout from "@/layouts/Layout.astro";
 import { calculateReadingTime, portableTextToPlainText } from "@/lib/utils";
 import { type ArticleType } from "@/types/sanityTypes";
@@ -12,7 +15,7 @@ const ARTICLES_QUERY = `*[
    "imageUrl": image.asset->url 
 }`;
 
-// Récupération des articles via le client Sanity
+// Récupérez les données à la demande
 const articles = await sanityClient.fetch<ArticleType[]>(ARTICLES_QUERY);
 
 const bgColors = [
@@ -21,7 +24,6 @@ const bgColors = [
   "bg-purple-light",
   "bg-blue-light",
 ];
-// Return both hover and base colors as a string
 const getColorClass = (index: number) => {
   const bgColor = bgColors[index % bgColors.length];
   return bgColor;
