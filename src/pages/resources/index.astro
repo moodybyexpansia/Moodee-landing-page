@@ -60,7 +60,7 @@ const articles = await sanityClient.fetch<ArticleType[]>(ARTICLES_QUERY);
           <MoveRight className="size-6" strokeWidth={3} />
         </a>
       </div>
-      <ul class="mt-6 flex items-center gap-6 overflow-x-scroll">
+      <ul class="mt-6 flex items-center gap-6 overflow-x-hidden">
         {
           prompts.map((prompt) => (
             <li class="min-w-64 rounded-xl">
@@ -100,7 +100,7 @@ const articles = await sanityClient.fetch<ArticleType[]>(ARTICLES_QUERY);
           <MoveRight className="size-6" strokeWidth={3} />
         </a>
       </div>
-      <ul class="mt-6 flex items-center gap-6 overflow-x-scroll">
+      <ul class="mt-6 flex items-center gap-6 overflow-x-hidden">
         {
           articles.map((article) => (
             <li class="min-w-64 rounded-xl">
