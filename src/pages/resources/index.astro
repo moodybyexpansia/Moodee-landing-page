@@ -62,23 +62,27 @@ const articles = await sanityClient.fetch<ArticleType[]>(ARTICLES_QUERY);
       </div>
       <ul class="mt-6 flex items-center gap-6 overflow-x-hidden">
         {
-          prompts.map((prompt) => (
-            <li class="min-w-64 rounded-xl">
-              {prompt.imageUrl && (
-                <img
-                  src={prompt.imageUrl}
-                  alt={prompt.title}
-                  class="h-40 w-full rounded-3xl object-cover"
-                />
-              )}
-              <div class="mb-1 mt-2 font-sans font-bold leading-tight text-blue dark:text-neutral-200">
-                {prompt.title}
-              </div>
-              <div class="line-clamp-3 text-xs font-normal text-gray-400">
-                {prompt.prompt}
-              </div>
-            </li>
-          ))
+          prompts
+            .sort(
+              (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+            )
+            .map((prompt) => (
+              <li class="min-w-64 rounded-xl">
+                {prompt.imageUrl && (
+                  <img
+                    src={prompt.imageUrl}
+                    alt={prompt.title}
+                    class="h-40 w-full rounded-3xl object-cover"
+                  />
+                )}
+                <div class="mb-1 mt-2 font-sans font-bold leading-tight text-blue dark:text-neutral-200">
+                  {prompt.title}
+                </div>
+                <div class="line-clamp-3 text-xs font-normal text-gray-400">
+                  {prompt.prompt}
+                </div>
+              </li>
+            ))
         }
       </ul>
     </div>
@@ -102,25 +106,29 @@ const articles = await sanityClient.fetch<ArticleType[]>(ARTICLES_QUERY);
       </div>
       <ul class="mt-6 flex items-center gap-6 overflow-x-hidden">
         {
-          articles.map((article) => (
-            <li class="min-w-64 rounded-xl">
-              {article.imageUrl && (
-                <img
-                  src={article.imageUrl}
-                  alt={article.title}
-                  class="h-40 w-full rounded-3xl object-cover"
-                />
-              )}
-              <div class="mb-1 mt-2 font-sans font-bold leading-tight text-blue dark:text-neutral-200">
-                {article.title}
-              </div>
-              <div class="prose line-clamp-3 text-xs font-normal text-gray-400">
-                {Array.isArray(article.content) && (
-                  <PortableText value={article.content} />
+          articles
+            .sort(
+              (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+            )
+            .map((article) => (
+              <li class="min-w-64 rounded-xl">
+                {article.imageUrl && (
+                  <img
+                    src={article.imageUrl}
+                    alt={article.title}
+                    class="h-40 w-full rounded-3xl object-cover"
+                  />
                 )}
-              </div>
-            </li>
-          ))
+                <div class="mb-1 mt-2 font-sans font-bold leading-tight text-blue dark:text-neutral-200">
+                  {article.title}
+                </div>
+                <div class="prose line-clamp-3 text-xs font-normal text-gray-400">
+                  {Array.isArray(article.content) && (
+                    <PortableText value={article.content} />
+                  )}
+                </div>
+              </li>
+            ))
         }
       </ul>
     </div>

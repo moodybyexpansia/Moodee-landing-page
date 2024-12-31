@@ -52,42 +52,46 @@ const getColorClass = (index: number) => {
 
     <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
       {
-        articles.map((article, index) => {
-          // Obtenez la classe de couleur basée sur l'index
-          const bgColor = getColorClass(index);
+        articles
+          .sort(
+            (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+          )
+          .map((article, index) => {
+            // Obtenez la classe de couleur basée sur l'index
+            const bgColor = getColorClass(index);
 
-          return (
-            <a
-              href={"/resources/newsletter/" + article.slug.current}
-              class={`space-y-2 rounded-3xl transition-all hover:translate-x-2 ${bgColor}`}
-            >
-              {article.imageUrl && (
-                <img
-                  src={article.imageUrl}
-                  alt={article.title}
-                  class="h-32 w-full rounded-3xl object-cover"
-                  loading="lazy"
-                />
-              )}
-              <div class="px-4 py-3">
-                <p class="mb-1 mt-2 font-sans text-xl font-semibold leading-tight">
-                  {article.title}
-                </p>
-                <div class="text-sm font-normal">
-                  {new Date(article.date).toLocaleDateString("fr-FR", {
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                  })}
-                  {" • "}
-                  {calculateReadingTime(
-                    portableTextToPlainText(article.content),
-                  ) + " min de lecture"}
+            return (
+              <a
+                href={"/resources/newsletter/" + article.slug.current}
+                class={`space-y-2 rounded-3xl transition-all hover:translate-x-2 ${bgColor}`}
+              >
+                {article.imageUrl && (
+                  <img
+                    src={article.imageUrl}
+                    alt={article.title}
+                    class="h-32 w-full rounded-3xl object-cover"
+                    loading="lazy"
+                  />
+                )}
+                <div class="px-4 py-3">
+                  <p class="mb-1 mt-2 font-sans text-xl font-semibold leading-tight">
+                    {article.title}
+                  </p>
+                  <div class="text-sm font-normal">
+                    {new Date(article.date).toLocaleDateString("fr-FR", {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                    })}
+                    {" • "}
+                    {calculateReadingTime(
+                      portableTextToPlainText(article.content),
+                    ) + " min de lecture"}
+                  </div>
                 </div>
-              </div>
-            </a>
-          );
-        })
+              </a>
+            );
+          })
       }
     </div>
   </section>
