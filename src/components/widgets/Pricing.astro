@@ -93,7 +93,7 @@ const planStyles: Record<
             const styles = planStyles[shortTitle]; // Récupérer les styles par titre
             return (
               <div
-                class={`group relative flex flex-col justify-between rounded-3xl border border-gray-200 bg-white p-8 shadow-md hover:cursor-pointer hover:shadow-full ${styles.hoverBgColor}`}
+                class={`group relative flex flex-col justify-between rounded-3xl border border-gray-200 bg-white p-8 shadow-md hover:shadow-full ${styles.hoverBgColor}`}
               >
                 {highlight && (
                   <div class="absolute right-[-5px] top-[-5px] z-[1] h-[100px] w-[100px] overflow-hidden text-right">
@@ -162,7 +162,8 @@ const planStyles: Record<
                 </ul>
 
                 <a
-                  href="https://moodee.app/auth/signup"
+                  href="https://calendly.com/vryckbosch/moodee"
+                  target="_blank"
                   class={`mt-6 ${styles.bgColor} hover:${styles.bgColor} inline-flex h-9 items-center justify-center gap-2 whitespace-nowrap rounded-lg px-4 py-2 text-sm font-medium text-white transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0`}
                 >
                   Essayer 7 jours
