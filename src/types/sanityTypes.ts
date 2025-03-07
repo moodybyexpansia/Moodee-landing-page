@@ -37,6 +37,8 @@ export interface ArticleType extends SanityDocumentLike {
   date: string; // Date associée au prompt en format ISO
   imageUrl?: string; // URL complète de l'image (optionnelle, pour faciliter l'accès)
   content: PortableTextBlock[]; // Contenu en format Portable Text
+  metaTitle?: string; // Titre de la page (optionnel)
+  metaDescription?: string; // Description de la page (optionnelle)
 }
 
 export interface NewsletterType extends SanityDocumentLike {
@@ -48,4 +50,6 @@ export interface NewsletterType extends SanityDocumentLike {
   date: string; // Date associée au prompt en format ISO
   imageUrl?: string; // URL complète de l'image (optionnelle, pour faciliter l'accès)
   content: PortableTextBlock[]; // Contenu en format Portable Text
+  metaTitle?: string; // Titre de la page (optionnel)
+  metaDescription?: string; // Description de la page (optionnelle)
 }

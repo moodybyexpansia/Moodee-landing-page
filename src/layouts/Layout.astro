@@ -20,10 +20,16 @@ const { title, description } = Astro.props;
       {title}
     </title>
 
-    <meta
-      name="description"
-      content="Moodee révolutionne la stratégie digitale avec une veille concurrentielle avancée et un suivi d’e-réputation précis. Analysez, anticipez, et agissez avec notre IA."
-    />
+    {
+      description ? (
+        <meta name="description" content={description} />
+      ) : (
+        <meta
+          name="description"
+          content="Moodee révolutionne la stratégie digitale avec une veille concurrentielle avancée et un suivi d’e-réputation précis. Analysez, anticipez, et agissez avec notre IA."
+        />
+      )
+    }
 
     <meta
       name="keywords"
