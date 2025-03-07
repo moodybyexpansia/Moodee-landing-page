@@ -38,3 +38,14 @@ export interface ArticleType extends SanityDocumentLike {
   imageUrl?: string; // URL complète de l'image (optionnelle, pour faciliter l'accès)
   content: PortableTextBlock[]; // Contenu en format Portable Text
 }
+
+export interface NewsletterType extends SanityDocumentLike {
+  title: string; // Titre du prompt
+  slug: {
+    current: string; // Slug de l'article (URL friendly)
+    _type: "slug"; // Type Sanity pour le slug
+  };
+  date: string; // Date associée au prompt en format ISO
+  imageUrl?: string; // URL complète de l'image (optionnelle, pour faciliter l'accès)
+  content: PortableTextBlock[]; // Contenu en format Portable Text
+}

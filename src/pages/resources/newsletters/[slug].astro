@@ -1,73 +1,50 @@
 ---
-import {
-  categoryStyles,
-  promptsCategories,
-} from "@/components/ui/prompts-cards";
 import Layout from "@/layouts/Layout.astro";
-import { calculateReadingTime, cn } from "@/lib/utils";
-import type { PromptType } from "@/types/sanityTypes";
+import { calculateReadingTime, portableTextToPlainText } from "@/lib/utils";
+import type { NewsletterType } from "@/types/sanityTypes";
+import { PortableText } from "astro-portabletext";
 import { sanityClient } from "sanity:client";
 
-const PROMPT_QUERY = `*[_type == "prompt" && slug.current == $slug][0]{
+const NEWSLETTER_QUERY = `*[_type == "newsletter" && slug.current == $slug][0]{
   ...,
   "imageUrl": image.asset->url,
-  "response": response.asset->url,
 }`;
 
-const prompt = await sanityClient.fetch<PromptType>(PROMPT_QUERY, Astro.params);
+const newsletter = await sanityClient.fetch<NewsletterType>(
+  NEWSLETTER_QUERY,
+  Astro.params,
+);
 
 export async function getStaticPaths(): Promise<{ params: { slug: string } }> {
-  const SLUGS_QUERY = `*[_type == "prompt" && defined(slug.current)]{
+  const SLUGS_QUERY = `*[_type == "newsletter" && defined(slug.current)]{
     "params": {"slug": slug.current}
   }`;
   return await sanityClient.fetch(SLUGS_QUERY, Astro.params);
 }
 ---
 
-<Layout title={prompt.title}>
+<Layout title={newsletter.title}>
   <section class="mx-auto w-11/12 max-w-7xl py-24">
     <div class="grid grid-cols-3 gap-6">
       <div
         class="relative col-span-full overflow-hidden rounded-[2rem] shadow-lg md:col-span-2"
       >
         <img
-          src={prompt.imageUrl}
-          alt={prompt.title}
+          src={newsletter.imageUrl}
+          alt={newsletter.title}
           class="h-96 w-full object-cover"
         />
 
         <div
           class="absolute bottom-0 left-0 right-0 space-y-2 bg-black bg-opacity-40 p-4 text-white backdrop-blur-md"
         >
-          <div
-            class={cn(
-              "flex w-fit items-center rounded-full text-sm bg-white px-2 py-1",
-              categoryStyles[prompt.category].textColor,
-            )}
-          >
-            <div
-              class={cn(
-                "mr-2 inline-block h-3 w-3 rounded-full",
-                categoryStyles[prompt.category].bgColor,
-              )}
-            >
-            </div>
-            <p>
-              {
-                promptsCategories.find(
-                  (category) => category.value === prompt.category,
-                )?.title
-              }
-            </p>
-          </div>
-
           <p class="text-xl font-semibold">
-            {prompt.title}
+            {newsletter.title}
           </p>
 
           <div class="text-sm font-normal">
             {
-              new Date(prompt.date).toLocaleDateString("fr-FR", {
+              new Date(newsletter.date).toLocaleDateString("fr-FR", {
                 year: "numeric",
                 month: "long",
                 day: "numeric",
@@ -75,8 +52,9 @@ export async function getStaticPaths(): Promise<{ params: { slug: string } }> {
             }
             {" • "}
             {
-              calculateReadingTime(prompt.prompt + prompt.response) +
-                " min de lecture"
+              calculateReadingTime(
+                portableTextToPlainText(newsletter.content),
+              ) + " min de lecture"
             }
           </div>
         </div>
@@ -113,11 +91,11 @@ export async function getStaticPaths(): Promise<{ params: { slug: string } }> {
       </div>
 
       <div class="col-span-2 space-y-3 text-dark">
-        <p class="font-bold">Prompt</p>
-        <p class="text-justify">{prompt.prompt}</p>
-
-        <p class="font-bold">Réponse</p>
-        <img src={prompt.response} alt="reponse du chat" />
+        {
+          Array.isArray(newsletter.content) && (
+            <PortableText value={newsletter.content} />
+          )
+        }
       </div>
     </div>
   </section>

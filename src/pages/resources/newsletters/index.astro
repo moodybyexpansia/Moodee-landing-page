@@ -7,8 +7,8 @@ import { calculateReadingTime, portableTextToPlainText } from "@/lib/utils";
 import { type ArticleType } from "@/types/sanityTypes";
 import { sanityClient } from "sanity:client";
 
-const ARTICLES_QUERY = `*[
-  _type == "article"
+const NEWSLETTERS_QUERY = `*[
+  _type == "newsletter"
   && defined(slug.current)
 ]|order(publishedAt desc){
  ...,
@@ -16,7 +16,7 @@ const ARTICLES_QUERY = `*[
 }`;
 
 // Récupérez les données à la demande
-const articles = await sanityClient.fetch<ArticleType[]>(ARTICLES_QUERY);
+const newsletters = await sanityClient.fetch<ArticleType[]>(NEWSLETTERS_QUERY);
 
 const bgColors = [
   "bg-green-light",
@@ -30,62 +30,57 @@ const getColorClass = (index: number) => {
 };
 ---
 
-<Layout title="Articles">
+<Layout title="Newsletters">
   <section class="mx-auto w-11/12 max-w-7xl space-y-12 py-12 md:py-16 lg:py-20">
     <div
       class="rounded-[3rem] bg-[url('/moodee-bg-blog.png')] bg-center py-8 text-center"
     >
-      <h1 class="mb-4 text-center text-5xl font-bold">
-        Lire tous nos articles
-      </h1>
+      <h1 class="mb-4 text-center text-5xl font-bold">Lire nos newsletters</h1>
       <p class="font-bold">
-        Décryptez l'actualité et les tendances du social listening avec l'IA
+        Restez au courant des dernières nouveautés de Moodee
       </p>
       <p class="mx-auto max-w-3xl text-sm text-gray-500">
-        Ici, retrouvrez vos ressources pour tout savoir sur l’univers du social
-        listening, de l’intelligence artificielle, et de l’analyse des médias
-        sociaux. Ici, nous partageons des actualités, des insights pratiques, et
-        des analyses approfondies pour vous aider à tirer le meilleur parti des
-        données numériques.
+        Ici, suivez nos newsletters pour rester au courant des dernières
+        nouveautés de Moodee.
       </p>
     </div>
 
     <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
       {
-        articles
+        newsletters
           .sort(
             (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
           )
-          .map((article, index) => {
+          .map((newsletter, index) => {
             // Obtenez la classe de couleur basée sur l'index
             const bgColor = getColorClass(index);
 
             return (
               <a
-                href={"/resources/newsletter/" + article.slug.current}
+                href={"/resources/newsletters/" + newsletter.slug.current}
                 class={`space-y-2 rounded-3xl transition-all hover:translate-x-2 ${bgColor}`}
               >
-                {article.imageUrl && (
+                {newsletter.imageUrl && (
                   <img
-                    src={article.imageUrl}
-                    alt={article.title}
+                    src={newsletter.imageUrl}
+                    alt={newsletter.title}
                     class="h-32 w-full rounded-3xl object-cover"
                     loading="lazy"
                   />
                 )}
                 <div class="px-4 py-3">
                   <p class="mb-1 mt-2 font-sans text-xl font-semibold leading-tight">
-                    {article.title}
+                    {newsletter.title}
                   </p>
-                  <div class="text-sm font-normal">
-                    {new Date(article.date).toLocaleDateString("fr-FR", {
+                  <div class="text-s font-normal">
+                    {new Date(newsletter.date).toLocaleDateString("fr-FR", {
                       year: "numeric",
                       month: "long",
                       day: "numeric",
                     })}
                     {" • "}
                     {calculateReadingTime(
-                      portableTextToPlainText(article.content),
+                      portableTextToPlainText(newsletter.content),
                     ) + " min de lecture"}
                   </div>
                 </div>

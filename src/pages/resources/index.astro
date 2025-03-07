@@ -1,6 +1,10 @@
 ---
 import Layout from "@/layouts/Layout.astro";
-import { type ArticleType, type PromptType } from "@/types/sanityTypes";
+import {
+  type ArticleType,
+  type NewsletterType,
+  type PromptType,
+} from "@/types/sanityTypes";
 import { PortableText } from "astro-portabletext";
 import { MoveRight } from "lucide-react";
 import { sanityClient } from "sanity:client";
@@ -21,9 +25,19 @@ const ARTICLES_QUERY = `*[
    "imageUrl": image.asset->url 
 }`;
 
+const NEWSLETTER_QUERY = `*[
+  _type == "newsletter"
+  && defined(slug.current)
+]|order(publishedAt desc)[0...6]{
+ ...,
+   "imageUrl": image.asset->url 
+}`;
+
 // Récupération des articles via le client Sanity
 const prompts = await sanityClient.fetch<PromptType[]>(PROMPTS_QUERY);
 const articles = await sanityClient.fetch<ArticleType[]>(ARTICLES_QUERY);
+const newsletters =
+  await sanityClient.fetch<NewsletterType[]>(NEWSLETTER_QUERY);
 ---
 
 <Layout title="Resources">
@@ -60,27 +74,77 @@ const articles = await sanityClient.fetch<ArticleType[]>(ARTICLES_QUERY);
           <MoveRight className="size-6" strokeWidth={3} />
         </a>
       </div>
-      <ul class="mt-6 flex items-center gap-6 overflow-x-hidden">
+      <ul class="no-scrollbar mt-6 flex items-start gap-6 overflow-x-auto">
         {
           prompts
             .sort(
               (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
             )
             .map((prompt) => (
-              <li class="min-w-64 rounded-xl">
-                {prompt.imageUrl && (
-                  <img
-                    src={prompt.imageUrl}
-                    alt={prompt.title}
-                    class="h-40 w-full rounded-3xl object-cover"
-                  />
-                )}
-                <div class="mb-1 mt-2 font-sans font-bold leading-tight text-blue dark:text-neutral-200">
-                  {prompt.title}
-                </div>
-                <div class="line-clamp-3 text-xs font-normal text-gray-400">
-                  {prompt.prompt}
-                </div>
+              <li class="min-w-64 max-w-64 rounded-xl">
+                <a href={"/resources/prompts/" + prompt.slug.current}>
+                  {prompt.imageUrl && (
+                    <img
+                      src={prompt.imageUrl}
+                      alt={prompt.title}
+                      class="h-40 w-full rounded-3xl object-cover"
+                    />
+                  )}
+                  <div class="mb-1 mt-2 font-sans font-bold leading-tight text-blue dark:text-neutral-200">
+                    {prompt.title}
+                  </div>
+                  <div class="line-clamp-3 text-xs font-normal text-gray-400">
+                    {prompt.prompt}
+                  </div>
+                </a>
+              </li>
+            ))
+        }
+      </ul>
+    </div>
+
+    <div class="rounded-[3rem] border border-blue px-10 py-8">
+      <div class="flex items-center justify-between gap-4">
+        <div class="flex-1">
+          <h3 class="text-3xl font-bold">Articles</h3>
+          <p class="text-sm md:text-base">
+            Retrouvez notre contenu sur le social listening et la veille
+            concurrentielle
+          </p>
+        </div>
+        <a
+          class="flex items-center gap-2 font-bold text-blue lg:gap-4"
+          href="/resources/articles"
+        >
+          <p>Voir tous</p>
+          <MoveRight className="size-6" strokeWidth={3} />
+        </a>
+      </div>
+      <ul class="mt-6 flex items-start gap-6 overflow-x-auto">
+        {
+          articles
+            .sort(
+              (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+            )
+            .map((article) => (
+              <li class="min-w-64 max-w-64 rounded-xl">
+                <a href={"/resources/articles/" + article.slug.current}>
+                  {article.imageUrl && (
+                    <img
+                      src={article.imageUrl}
+                      alt={article.title}
+                      class="h-40 w-full rounded-3xl object-cover"
+                    />
+                  )}
+                  <div class="mb-1 mt-2 font-sans font-bold leading-tight text-blue dark:text-neutral-200">
+                    {article.title}
+                  </div>
+                  <div class="prose line-clamp-3 text-xs font-normal text-gray-400">
+                    {Array.isArray(article.content) && (
+                      <PortableText value={article.content} />
+                    )}
+                  </div>
+                </a>
               </li>
             ))
         }
@@ -92,41 +156,43 @@ const articles = await sanityClient.fetch<ArticleType[]>(ARTICLES_QUERY);
         <div class="flex-1">
           <h3 class="text-3xl font-bold">Newsletter</h3>
           <p class="text-sm md:text-base">
-            Suivez les étapes ci-dessous afin de configurer votre analyser
-            rapidement et efficacement
+            Retrouvez notre newsletter mensuelle pour suivre les dernières
+            actualités de Moodee
           </p>
         </div>
         <a
           class="flex items-center gap-2 font-bold text-blue lg:gap-4"
-          href="/resources/newsletter"
+          href="/resources/newsletters"
         >
           <p>Voir tous</p>
           <MoveRight className="size-6" strokeWidth={3} />
         </a>
       </div>
-      <ul class="mt-6 flex items-center gap-6 overflow-x-hidden">
+      <ul class="mt-6 flex items-start gap-6 overflow-x-auto">
         {
-          articles
+          newsletters
             .sort(
               (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
             )
-            .map((article) => (
-              <li class="min-w-64 rounded-xl">
-                {article.imageUrl && (
-                  <img
-                    src={article.imageUrl}
-                    alt={article.title}
-                    class="h-40 w-full rounded-3xl object-cover"
-                  />
-                )}
-                <div class="mb-1 mt-2 font-sans font-bold leading-tight text-blue dark:text-neutral-200">
-                  {article.title}
-                </div>
-                <div class="prose line-clamp-3 text-xs font-normal text-gray-400">
-                  {Array.isArray(article.content) && (
-                    <PortableText value={article.content} />
+            .map((newsletter) => (
+              <li class="min-w-64 max-w-64 rounded-xl">
+                <a href={"/resources/newsletter/" + newsletter.slug.current}>
+                  {newsletter.imageUrl && (
+                    <img
+                      src={newsletter.imageUrl}
+                      alt={newsletter.title}
+                      class="h-40 w-full rounded-3xl object-cover"
+                    />
                   )}
-                </div>
+                  <div class="mb-1 mt-2 font-sans font-bold leading-tight text-blue dark:text-neutral-200">
+                    {newsletter.title}
+                  </div>
+                  <div class="prose line-clamp-3 text-xs font-normal text-gray-400">
+                    {Array.isArray(newsletter.content) && (
+                      <PortableText value={newsletter.content} />
+                    )}
+                  </div>
+                </a>
               </li>
             ))
         }
