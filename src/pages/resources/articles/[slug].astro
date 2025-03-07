@@ -1,8 +1,8 @@
 ---
+import PortableText from "@/components/portable-text-components/PortableText.astro";
 import Layout from "@/layouts/Layout.astro";
 import { calculateReadingTime, portableTextToPlainText } from "@/lib/utils";
 import type { ArticleType } from "@/types/sanityTypes";
-import { PortableText } from "astro-portabletext";
 import { sanityClient } from "sanity:client";
 
 const ARTICLE_QUERY = `*[_type == "article" && slug.current == $slug][0]{
@@ -89,12 +89,8 @@ export async function getStaticPaths(): Promise<{ params: { slug: string } }> {
         </div>
       </div>
 
-      <div class="col-span-2 space-y-3 text-dark">
-        {
-          Array.isArray(article.content) && (
-            <PortableText value={article.content} />
-          )
-        }
+      <div class="col-span-full space-y-3 text-dark">
+        {(<PortableText portableText={article.content} />)}
       </div>
     </div>
   </section>

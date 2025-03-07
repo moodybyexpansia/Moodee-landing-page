@@ -1,4 +1,5 @@
 ---
+import { YouTube } from "astro-embed";
 import { Calendar } from "lucide-react";
 
 const images = [
@@ -82,17 +83,14 @@ const images = [
         <p class="mt-1 text-center text-sm text-gray-400">
           Sans engagement, c'est rapide et simple.
         </p>
-      </div>
+      </div>@
     </div>
-    <video
-      class="mx-auto mb-16 w-full max-w-6xl rounded-[3rem] shadow-lg"
-      autoplay
-      muted
-      controls
-    >
-      <source src="/demo-moodee-fr.mp4" type="video/mp4" />
-      Votre navigateur ne supporte pas la lecture des vidéos.
-    </video>
+
+    <YouTube
+      id="https://www.youtube.com/watch?v=F09i7wmj5Bg"
+      title="Moodee : Révolutionnez Votre Veille Concurrentielle avec l’IA"
+      class="mx-auto mb-16 w-full max-w-6xl rounded-3xl shadow-lg"
+    />
 
     <div
       class="mx-auto mb-4 grid grid-cols-2 flex-wrap items-center justify-center gap-x-6 sm:grid-cols-3 md:grid-cols-5"
