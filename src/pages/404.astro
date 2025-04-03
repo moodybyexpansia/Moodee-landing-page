@@ -1,0 +1,19 @@
+---
+// src/pages/404.astro
+import Layout from "../layouts/Layout.astro";
+
+// Redirection côté client vers la page d'accueil
+---
+
+<Layout title="Page non trouvée">
+  <script>
+    window.location.href = "/";
+  </script>
+  <div class="container mx-auto px-6 py-12 text-center">
+    <h1 class="mb-4 text-4xl font-bold">Page non trouvée</h1>
+    <p class="mb-8">Redirection vers la page d'accueil...</p>
+    <a href="/" class="text-blue-600 hover:underline"
+      >Cliquez ici si vous n'êtes pas redirigé automatiquement</a
+    >
+  </div>
+</Layout>
